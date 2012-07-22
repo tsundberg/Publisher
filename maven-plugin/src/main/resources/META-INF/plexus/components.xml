@@ -6,7 +6,7 @@
             <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
             <configuration>
                 <phases>
-                    <process-resources>se.somath.maven.plugins:publisher-plugin:publish</process-resources>
+                    <process-resources>se.somath.publisher:maven-plugin:publish</process-resources>
                 </phases>
             </configuration>
         </component>
