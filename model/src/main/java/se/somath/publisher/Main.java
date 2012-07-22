@@ -6,22 +6,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class Main {
-    public void copyToTarget() {
-        // todo remove hardcoded file paths
-        String targetDirectoryName = "/Users/tsu/projects/tsu/publisher/acceptance-test/target";
-        File targetDirectory = new File(targetDirectoryName);
-
-        if (!targetDirectory.mkdirs()) {
-            String failedDirectoryName = targetDirectory.getAbsolutePath();
-            // todo add custom exception
-            throw new RuntimeException("Unable to create " + failedDirectoryName);
-        }
-
-        // todo remove hardcoded file paths
-        File sourceFile = new File("/Users/tsu/projects/tsu/publisher/acceptance-test/src/main/resources/index.html");
+    public void copyToTarget(String sourceDirectory, String targetDirectory) {
+        File targetDir = new File(targetDirectory);
+        String sourceFileName = sourceDirectory + File.separator + "index.html";
+        File sourceFile = new File(sourceFileName);
 
         try {
-            FileUtils.copyFileToDirectory(sourceFile, targetDirectory);
+            FileUtils.copyFileToDirectory(sourceFile, targetDir);
         } catch (IOException e) {
             e.printStackTrace();
         }
