@@ -1,4 +1,4 @@
-package se.somath.maven.plugins.publisher;
+package se.somath.publisher.maven.plugin;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
