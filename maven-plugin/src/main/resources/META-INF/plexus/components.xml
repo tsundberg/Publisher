@@ -1,0 +1,14 @@
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>blog</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <phases>
+                    <process-resources>se.somath.maven.plugins:publisher-plugin:publish</process-resources>
+                </phases>
+            </configuration>
+        </component>
+    </components>
+</component-set>
