@@ -25,6 +25,6 @@ public class PublisherMojo extends AbstractMojo {
         String sourceDirectory = resources.get(0).getDirectory();
 
         Main main = new Main();
-        main.copyToTarget(sourceDirectory, targetDirectory);
+        main.publish(sourceDirectory, targetDirectory);
     }
 }
