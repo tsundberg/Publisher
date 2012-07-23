@@ -9,11 +9,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class HtmlFormatterTest {
+    private HtmlFormatter formatter = new HtmlFormatter();
 
     @Test
     public void shouldRemoveAllLineBreaksInOneLineParagraph() {
-        HtmlFormatter formatter = new HtmlFormatter();
-
         List<String> given = new LinkedList<String>();
         given.add("<p>");
         given.add("    This is an indented line. ");
@@ -29,8 +28,6 @@ public class HtmlFormatterTest {
 
     @Test
     public void shouldRemoveAllLineBreaksInTwoLineParagraph() {
-        HtmlFormatter formatter = new HtmlFormatter();
-
         List<String> given = new LinkedList<String>();
         given.add("<p>");
         given.add("    This is an indented line. ");
@@ -47,8 +44,6 @@ public class HtmlFormatterTest {
 
     @Test
     public void shouldNotFormatOutCommentedLines() {
-        HtmlFormatter formatter = new HtmlFormatter();
-
         List<String> given = new LinkedList<String>();
         given.add("<p>");
         given.add("    This is an indented line. ");
@@ -71,8 +66,6 @@ public class HtmlFormatterTest {
 
     @Test
     public void shouldReturnCompleteHtmlDocument() {
-        HtmlFormatter formatter = new HtmlFormatter();
-
         List<String> given = new LinkedList<String>();
         given.add("<html>");
         given.add("<p>");
@@ -93,8 +86,6 @@ public class HtmlFormatterTest {
 
     @Test
     public void shouldFormatLongListItems() {
-        HtmlFormatter formatter = new HtmlFormatter();
-
         List<String> given = new LinkedList<String>();
         given.add("    <li>This is a long list item that has been divided into more then one line in the source but should not be divided");
         given.add("        in the transformed result.");
@@ -107,10 +98,9 @@ public class HtmlFormatterTest {
 
         assertThat(actual, is(expected));
     }
+
     @Test
     public void shouldFormatShortListItems() {
-        HtmlFormatter formatter = new HtmlFormatter();
-
         List<String> given = new LinkedList<String>();
         given.add("    <li>This is short list</li>");
 
@@ -121,5 +111,4 @@ public class HtmlFormatterTest {
 
         assertThat(actual, is(expected));
     }
-
 }
