@@ -16,10 +16,8 @@ public class Main {
 
         try {
             List<String> content = readSourceFile(sourceDirectory, defaultFileName);
-
             content = formatHtml(content);
-            // 4 lägg till includes, byt ut alla rader med include till det verkliga värdet med pre taggar före och efter och rätt encodade
-
+            content = addIncludes(content);
             writeTargetFile(targetDirectory, content, defaultFileName);
         } catch (FileNotFoundException e) {
             throw new PublishException(e);
@@ -27,11 +25,6 @@ public class Main {
         } catch (IOException e) {
             throw new PublishException(e);
         }
-    }
-
-    private List<String> formatHtml(List<String> unFormattedContent) {
-        HtmlFormatter formatter = new HtmlFormatter();
-        return formatter.format(unFormattedContent);
     }
 
     private List<String> readSourceFile(String sourceDirectory, String fileName) throws FileNotFoundException {
@@ -46,6 +39,15 @@ public class Main {
         }
 
         return content;
+    }
+
+    private List<String> formatHtml(List<String> unFormattedContent) {
+        HtmlFormatter formatter = new HtmlFormatter();
+        return formatter.format(unFormattedContent);
+    }
+
+    private List<String> addIncludes(List<String> unFormattedContent) {
+        return unFormattedContent;
     }
 
     private void writeTargetFile(String targetDirectory, List<String> content, String fileName) throws IOException {
