@@ -6,92 +6,56 @@
 
 <h1>Documentation and acceptance test for a html publisher</h1>
 
-<p>
-    This is the documentation and acceptance tests for a html publisher. The purpose with the html publisher os to allow
-    a text written in html include source code that is properly formatted for html. Source code may be Java, xml, html,
-    xhtml and so on. This document will act both as documentation of the tool and as an acceptance test document. It
-    will contain the specific includes that should be handled properly as well as being used for the transformation.
-</p>
+<p> This is the documentation and acceptance tests for a html publisher. The purpose with the html publisher os to allow a text written in html include source code that is properly formatted for html. Source code may be Java, xml, html, xhtml and so on. This document will act both as documentation of the tool and as an acceptance test document. It will contain the specific includes that should be handled properly as well as being used for the transformation. </p>
 
 <!--more-->
 
-<p>
-    A key feature is that the html should be formatted so no unnecessary line breaks are included in the transformed
-    result. This is needed so Wordpress doesn't break a paragraph written in html just because a pretty code formatter
-    did that.
-</p>
+<p> A key feature is that the html should be formatted so no unnecessary line breaks are included in the transformed result. This is needed so Wordpress doesn't break a paragraph written in html just because a pretty code formatter did that. </p>
 
 <h2>Comments</h2>
 
-<p>
-    Html comments should be respected in the sense that no transformation should be done inside of a comment. The
-    comment
-    should just be passed through the transformer without any changes in its formatting. An example may look like this:
-</p>
+<p> Html comments should be respected in the sense that no transformation should be done inside of a comment. The comment should just be passed through the transformer without any changes in its formatting. An example may look like this: </p>
 
 <!--
     This is a html comment that should be passed through the transformer verbatim. No changes should be done.
 
 -->
 
-<!-- todo implement
 <h2>Lists</h2>
 
-<p>
-    Lists should be treated as paragraphs in the sense that any line breaks should not be included. Very long list items
-    should be transformed so that they have there start tag and end tag on the same line. An example may look like:
-</p>
+<p> Lists should be treated as paragraphs in the sense that any line breaks should not be included. Very long list items should be transformed so that they have there start tag and end tag on the same line. An example may look like: </p>
 
 <ul>
-    <li>This is a long list item that has been divided into more then one line in the source but should not be divided
-        in the transformed result.
-    </li>
+    <li>This is a long list item that has been divided into more then one line in the source but should not be divided in the transformed result. </li>
 </ul>
 
 <ol>
-    <li>This is another long list item that has been divided into more then one line in the source but should not be
-        divided
-        in the transformed result.
-    </li>
+    <li>This is another long list item that has been divided into more then one line in the source but should not be divided in the transformed result. </li>
 </ol>
 
 <h2>Includes</h2>
 
-<p>
-    The most important feature is including files. The include is defined with an include tag at the beginning of a row
-    in the tml document. It should not be part of any tag, except the html and possible the body tag. The result should
-    be a pre tag with the file properly transformed. The transformation should only be done for characters that has a
-    special meaning in html. A typical example is '&gt;' in xml that has to be transformed.
-</p>
+<p> The most important feature is including files. The include is defined with an include tag at the beginning of a row in the tml document. It should not be part of any tag, except the html and possible the body tag. The result should be a pre tag with the file properly transformed. The transformation should only be done for characters that has a special meaning in html. A typical example is '&gt;' in xml that has to be transformed. </p>
 
-<p>
-    The different includes that are supported are these:
-</p>
+<p> The different includes that are supported are these: </p>
 
-<p>
-    Simple file include:
-</p>
+<p> Simple file include: </p>
 
 <pre>
 &lt;include root="./acceptance-test"
          file="pom.xml"/&gt;
 </pre>
 
-<p>
-    And the result is:
-</p>
+<p> And the result is: </p>
 
+<!--
 <include root="./acceptance-test"
          file="pom.xml"/>
 -->
 
 <h2>Pre and code</h2>
 
-<p>
-    Pre and code tags should not be transformed at all, they should be treated as pass through without any
-    alterations
-    at all.
-</p>
+<p> Pre and code tags should not be transformed at all, they should be treated as pass through without any alterations at all. </p>
 
 <h2>Resources</h2>
 

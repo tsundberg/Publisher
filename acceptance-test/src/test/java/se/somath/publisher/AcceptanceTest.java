@@ -68,8 +68,8 @@ public class AcceptanceTest {
         while (actualIterator.hasNext()) {
             lineNumber++;
             String errorMessage = "\nsource file: " + actualFile + " \nline number: " + lineNumber;
-            String actual = actualIterator.nextLine();
-            String expected = expectedIterator.nextLine();
+            String actual = actualIterator.nextLine().trim();
+            String expected = expectedIterator.nextLine().trim();
 
             assertThat(errorMessage, actual, is(expected));
         }

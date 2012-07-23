@@ -3,6 +3,7 @@ package se.somath.publisher;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import se.somath.publisher.excpetion.PublishException;
+import se.somath.publisher.formatter.HtmlFormatter;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -16,7 +17,7 @@ public class Main {
         try {
             List<String> content = readSourceFile(sourceDirectory, defaultFileName);
 
-            // 3 formatera html i string buffern
+            content = formatHtml(content);
             // 4 lägg till includes, byt ut alla rader med include till det verkliga värdet med pre taggar före och efter och rätt encodade
 
             writeTargetFile(targetDirectory, content, defaultFileName);
@@ -26,6 +27,11 @@ public class Main {
         } catch (IOException e) {
             throw new PublishException(e);
         }
+    }
+
+    private List<String> formatHtml(List<String> unFormattedContent) {
+        HtmlFormatter formatter = new HtmlFormatter();
+        return formatter.format(unFormattedContent);
     }
 
     private List<String> readSourceFile(String sourceDirectory, String fileName) throws FileNotFoundException {
