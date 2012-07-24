@@ -46,8 +46,11 @@ public class Main {
         return formatter.format(unFormattedContent);
     }
 
-    private List<String> addIncludes(List<String> unFormattedContent) {
-        return unFormattedContent;
+    private List<String> addIncludes(List<String> unIncludedContent) {
+        // todo implement
+        // SourceCodeIncluder includer = new SourceCodeIncluder();
+        // return includer.getIncludes(unIncludedContent);
+        return unIncludedContent;
     }
 
     private void writeTargetFile(String targetDirectory, List<String> content, String fileName) throws IOException {
