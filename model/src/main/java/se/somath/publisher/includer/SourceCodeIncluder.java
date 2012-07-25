@@ -1,5 +1,7 @@
 package se.somath.publisher.includer;
 
+import se.somath.publisher.formatter.HtmlEncoder;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,8 +32,7 @@ public class SourceCodeIncluder {
                 includeParser.parse(includeTag);
                 includeTag = "";
 
-                List<String> sourceCode = readSourceFile();
-                result.addAll(sourceCode);
+                addFormattedSourceCode(result);
                 continue;
             }
 
@@ -47,8 +48,7 @@ public class SourceCodeIncluder {
                 includeParser.parse(includeTag);
                 includeTag = "";
 
-                List<String> sourceCode = readSourceFile();
-                result.addAll(sourceCode);
+                addFormattedSourceCode(result);
 
                 startTagFound = false;
                 continue;
@@ -62,6 +62,19 @@ public class SourceCodeIncluder {
         }
 
         return result;
+    }
+
+    private void addFormattedSourceCode(List<String> result) {
+        result.add("<pre>");
+
+        List<String> unFormattedSourceCode = readSourceFile();
+
+        HtmlEncoder htmlEncoder = new HtmlEncoder();
+        List<String> formattedSourceCode = htmlEncoder.encode(unFormattedSourceCode);
+
+        result.addAll(formattedSourceCode);
+        result.add("</pre>");
+        result.add("<p><i>pom.xml</i></p>");
     }
 
     private List<String> readSourceFile() {

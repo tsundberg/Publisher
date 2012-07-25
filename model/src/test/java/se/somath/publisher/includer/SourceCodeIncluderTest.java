@@ -93,9 +93,37 @@ public class SourceCodeIncluderTest {
 
         List<String> actual = includer.addIncludes(given);
 
-        int projectRow = 5;
+        assertPreTagStart(actual);
+        assertProjectRow(actual);
+        assertPreTagEnd(actual);
+        assertFileName(actual);
+    }
+
+    private void assertPreTagStart(List<String> actual) {
+        int preTagStartRow = 4;
+        String actualLine = actual.get(preTagStartRow);
+        assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("<pre>"));
+    }
+
+    private void assertProjectRow(List<String> actual) {
+        int projectRow = 6;
         String actualLine = actual.get(projectRow);
-        assertTrue("Expect to find the beginning of a pom, but found: \n" + actualLine, actualLine.contains("project"));
+        assertTrue("Expect to find the beginning of a pom, but found: \n" + actualLine + "\n\n", actualLine.contains("project"));
+    }
+
+    private void assertPreTagEnd(List<String> actual) {
+        int preEndTagRowOffset = 4;
+        int preTagEndRow = actual.size() - preEndTagRowOffset;
+        String actualLine = actual.get(preTagEndRow);
+        assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("</pre>"));
+    }
+
+    private void assertFileName(List<String> actual) {
+        int fileNameRowOffset = 3;
+        int fileNameRow = actual.size() - fileNameRowOffset;
+        String actualLine = actual.get(fileNameRow);
+        String fileName = "pom.xml";
+        assertTrue("Expect to find the filename in italics, but found: \n" + actualLine + "\n\n", actualLine.contains("<p><i>" + fileName + "</i></p>"));
     }
 
 
