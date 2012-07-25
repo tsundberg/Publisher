@@ -39,9 +39,9 @@ The result is written to
 
     ./target/index.html
 
-### <include>
+###  `<include>`
 
-Add the tag <include> to include source code
+Add the tag `<include>` to include source code
 
 Three attributes are supported:
 
@@ -57,7 +57,7 @@ An example is:
          fileDisplayName="src/test/java/se/waymark/rentit/steps/RentStepdefs.java"/>
 ```
 
-This would search for the file src/main/files/RentStepdefs.java from the relative root ./blog/ The filename would be displayed as src/test/java/se/waymark/rentit/steps/RentStepdefs.java
+This would search for the file `src/main/files/RentStepdefs.java` from the relative root `./blog/` The filename would be displayed as `src/test/java/se/waymark/rentit/steps/RentStepdefs.java`
 
 
 ## Feedback
