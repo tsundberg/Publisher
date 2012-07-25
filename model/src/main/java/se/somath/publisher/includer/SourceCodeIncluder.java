@@ -59,6 +59,7 @@ public class SourceCodeIncluder {
 
             if (sourceCode != null) {
                 result.addAll(sourceCode);
+                sourceCode = null;
             }
         }
 
