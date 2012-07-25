@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <groupId>se.somath.publisher</groupId>
     <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <description>A Maven plugin that reads a html file and includes source code into it</description>
+    <url>https://github.com/tsundberg/publisher.git</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:git://github.com/tsundberg/publisher.git</connection>
+        <developerConnection>scm:git:git@github.com/tsundberg/publisher.git</developerConnection>
+        <url>git://github.com/tsundberg/publisher.git</url>
+    </scm>
+    <developers>
+        <developer>
+            <id>tsu</id>
+            <name>Thomas Sundberg</name>
+            <email>tsu@kth.se</email>
+        </developer>
+    </developers>
     <modules>
         <module>model</module>
         <module>maven-plugin</module>
