@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SourceCodeIncluder {
-    private SourceCodeReader sourceCodeReader;
+    private SourceCodeReader sourceCodeReader = new SourceCodeReader();
     private IncludeParser includeParser = new IncludeParser();
 
     public List<String> addIncludes(List<String> content) {
@@ -31,10 +31,7 @@ public class SourceCodeIncluder {
                 includeParser.parse(includeTag);
                 includeTag = "";
 
-                String root = includeParser.getRoot();
-                String fileName = includeParser.getFileName();
-
-                sourceCodeReader.readFile(root, fileName);
+                sourceCode = readSourceFile();
             }
 
             if (candidate.startsWith("<include") && !candidate.endsWith("/>") && !inComment) {
@@ -49,10 +46,7 @@ public class SourceCodeIncluder {
                 includeParser.parse(includeTag);
                 includeTag = "";
 
-                String root = includeParser.getRoot();
-                String fileName = includeParser.getFileName();
-
-                sourceCodeReader.readFile(root, fileName);
+                sourceCode = readSourceFile();
 
                 startTagFound = false;
             }
@@ -69,6 +63,15 @@ public class SourceCodeIncluder {
         }
 
         return result;
+    }
+
+    private List<String> readSourceFile() {
+        List<String> sourceCode;
+        String root = includeParser.getRoot();
+        String fileName = includeParser.getFileName();
+
+        sourceCode = sourceCodeReader.readFile(root, fileName);
+        return sourceCode;
     }
 
     public void setSourceCodeReader(SourceCodeReader sourceCodeReader) {
