@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import se.somath.publisher.excpetion.PublishException;
 import se.somath.publisher.formatter.HtmlFormatter;
+import se.somath.publisher.includer.SourceCodeIncluder;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -47,10 +48,8 @@ public class Main {
     }
 
     private List<String> addIncludes(List<String> unIncludedContent) {
-        // todo implement
-        // SourceCodeIncluder includer = new SourceCodeIncluder();
-        // return includer.getIncludes(unIncludedContent);
-        return unIncludedContent;
+        SourceCodeIncluder includer = new SourceCodeIncluder();
+        return includer.addIncludes(unIncludedContent);
     }
 
     private void writeTargetFile(String targetDirectory, List<String> content, String fileName) throws IOException {
