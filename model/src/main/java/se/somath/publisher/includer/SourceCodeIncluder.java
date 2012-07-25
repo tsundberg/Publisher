@@ -12,11 +12,20 @@ public class SourceCodeIncluder {
         List<String> result = new LinkedList<String>();
 
         String includeTag = "";
+        boolean inComment = false;
         boolean startTagFound = false;
         List<String> sourceCode = null;
 
         for (String candidate : content) {
-            if (candidate.startsWith("<include") && candidate.endsWith("/>")) {
+            if (candidate.startsWith("<!--")) {
+                inComment = true;
+            }
+
+            if (candidate.endsWith("-->")) {
+                inComment = false;
+            }
+
+            if (candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
                 includeTag = candidate;
 
                 includeParser.parse(includeTag);
@@ -28,13 +37,13 @@ public class SourceCodeIncluder {
                 sourceCodeReader.readFile(root, fileName);
             }
 
-            if (candidate.startsWith("<include") && !candidate.endsWith("/>")) {
+            if (candidate.startsWith("<include") && !candidate.endsWith("/>") && !inComment) {
                 includeTag = candidate;
                 startTagFound = true;
                 continue;
             }
 
-            if (!candidate.startsWith("<include") && candidate.endsWith("/>")) {
+            if (!candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
                 includeTag += candidate;
 
                 includeParser.parse(includeTag);
@@ -48,7 +57,7 @@ public class SourceCodeIncluder {
                 startTagFound = false;
             }
 
-            if (startTagFound) {
+            if (startTagFound && !inComment) {
                 includeTag += candidate;
             } else {
                 result.add(candidate);

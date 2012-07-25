@@ -5,8 +5,9 @@ import org.junit.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 public class SourceCodeIncluderTest {
 
@@ -53,6 +54,25 @@ public class SourceCodeIncluderTest {
         includer.addIncludes(given);
 
         verify(sourceCodeReader).readFile("fileRoot", "fileRelativeTheRoot");
+    }
+
+    @Test
+    public void shouldIgnoreIncludesInComments() {
+        List<String> given = new LinkedList<String>();
+
+        given.add("<!--");
+        given.add("<include ");
+        given.add("root=\"fileRoot\" ");
+        given.add("file=\"fileRelativeTheRoot\"/>");
+        given.add("-->");
+
+        SourceCodeReader sourceCodeReader = mock(SourceCodeReader.class);
+        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+
+        List<String> actual = includer.addIncludes(given);
+
+        verify(sourceCodeReader, never()).readFile("fileRoot", "fileRelativeTheRoot");
+        assertThat(actual, is(given));
     }
 
     private SourceCodeIncluder getSourceCodeIncluder(SourceCodeReader sourceCodeReader) {
