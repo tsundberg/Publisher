@@ -23,4 +23,17 @@ public class IncludeParserTest {
         String actualFileName = parser.getFileName();
         assertThat(actualFileName, is(expectedFileName));
     }
+
+    @Test
+    public void shouldParseFileDisplayName() {
+        IncludeParser parser = new IncludeParser();
+
+        String expectedFileDisplayName = "fileDisplayName";
+        String given = "<include fileDisplayName=\"" + expectedFileDisplayName + "\"/>";
+
+        parser.parse(given);
+
+        String actualFileDisplayName = parser.getFileDisplayName();
+        assertThat(actualFileDisplayName, is(expectedFileDisplayName));
+    }
 }

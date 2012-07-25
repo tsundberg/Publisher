@@ -18,6 +18,7 @@ import java.io.StringReader;
 public class IncludeParser {
     private String root;
     private String fileName;
+    private String fileDisplayName;
 
     public void parse(String include) {
         Document document;
@@ -34,6 +35,7 @@ public class IncludeParser {
         NamedNodeMap attributes = findIncludeTag(document);
         root = findRootName(attributes);
         fileName = findFileName(attributes);
+        fileDisplayName = findFileDisplayName(attributes);
     }
 
     public String getRoot() {
@@ -42,6 +44,10 @@ public class IncludeParser {
 
     public String getFileName() {
         return fileName;
+    }
+
+    public String getFileDisplayName() {
+        return fileDisplayName;
     }
 
     private Document parseIncludeString(String include) throws ParserConfigurationException, SAXException, IOException {
@@ -62,14 +68,26 @@ public class IncludeParser {
     }
 
     private String findRootName(NamedNodeMap attributes) {
-        String rootAttributeName = "root";
-        Node rootItem = attributes.getNamedItem(rootAttributeName);
-        return rootItem.getNodeValue();
+        String attributeName = "root";
+        return getNodeValue(attributes, attributeName);
     }
 
     private String findFileName(NamedNodeMap attributes) {
-        String fileAttributeName = "file";
-        Node fileItem = attributes.getNamedItem(fileAttributeName);
-        return fileItem.getNodeValue();
+        String attributeName = "file";
+        return getNodeValue(attributes, attributeName);
+    }
+
+    private String findFileDisplayName(NamedNodeMap attributes) {
+        String attributeName = "fileDisplayName";
+        return getNodeValue(attributes, attributeName);
+    }
+
+    private String getNodeValue(NamedNodeMap attributes, String attributeName) {
+        Node item = attributes.getNamedItem(attributeName);
+        if (item != null) {
+            return item.getNodeValue();
+        } else {
+            return "";
+        }
     }
 }

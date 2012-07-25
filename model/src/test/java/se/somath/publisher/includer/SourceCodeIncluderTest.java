@@ -99,6 +99,30 @@ public class SourceCodeIncluderTest {
         assertFileName(actual);
     }
 
+    @Test
+    public void shouldIncludeFileAndUseFileDisplayName() {
+        List<String> given = new LinkedList<String>();
+        given.add("<p>");
+        given.add("    And the result is:");
+        given.add("</p>");
+        given.add("");
+        given.add("<include root=\"./model\"");
+        given.add("         file=\"pom.xml\"");
+        given.add("         fileDisplayName=\"fileDisplayName.xml\"/>");
+        given.add("");
+        given.add("<h2>Pre and code</h2>");
+
+        SourceCodeReader sourceCodeReader = new SourceCodeReader();
+        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+
+        List<String> actual = includer.addIncludes(given);
+
+        assertPreTagStart(actual);
+        assertProjectRow(actual);
+        assertPreTagEnd(actual);
+        assertFileDisplayName(actual);
+    }
+
     private void assertPreTagStart(List<String> actual) {
         int preTagStartRow = 4;
         String actualLine = actual.get(preTagStartRow);
@@ -124,6 +148,14 @@ public class SourceCodeIncluderTest {
         String actualLine = actual.get(fileNameRow);
         String fileName = "pom.xml";
         assertTrue("Expect to find the filename in italics, but found: \n" + actualLine + "\n\n", actualLine.contains("<p><i>" + fileName + "</i></p>"));
+    }
+
+    private void assertFileDisplayName(List<String> actual) {
+        int fileNameRowOffset = 3;
+        int fileNameRow = actual.size() - fileNameRowOffset;
+        String actualLine = actual.get(fileNameRow);
+        String fileDisplayName = "fileDisplayName.xml";
+        assertTrue("Expect to find the file display name in italics, but found: \n" + actualLine + "\n\n", actualLine.contains("<p><i>" + fileDisplayName + "</i></p>"));
     }
 
 

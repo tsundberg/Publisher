@@ -65,16 +65,35 @@ public class SourceCodeIncluder {
     }
 
     private void addFormattedSourceCode(List<String> result) {
+        addStartPreTag(result);
+        addEncodedSourceCode(result);
+        addEndPreTag(result);
+        addFileName(result);
+    }
+
+    private void addStartPreTag(List<String> result) {
         result.add("<pre>");
+    }
 
+    private void addEncodedSourceCode(List<String> result) {
         List<String> unFormattedSourceCode = readSourceFile();
-
         HtmlEncoder htmlEncoder = new HtmlEncoder();
         List<String> formattedSourceCode = htmlEncoder.encode(unFormattedSourceCode);
-
         result.addAll(formattedSourceCode);
+    }
+
+    private void addEndPreTag(List<String> result) {
         result.add("</pre>");
-        result.add("<p><i>pom.xml</i></p>");
+    }
+
+    private void addFileName(List<String> result) {
+        String fileName = includeParser.getFileName();
+        String fileDisplayName = includeParser.getFileDisplayName();
+        if (fileDisplayName.length() > 0) {
+            result.add("<p><i>" + fileDisplayName + "</i></p>");
+        } else {
+            result.add("<p><i>" + fileName + "</i></p>");
+        }
     }
 
     private List<String> readSourceFile() {
