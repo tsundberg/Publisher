@@ -22,7 +22,6 @@ public class Main {
             writeTargetFile(targetDirectory, content, defaultFileName);
         } catch (FileNotFoundException e) {
             throw new PublishException(e);
-
         } catch (IOException e) {
             throw new PublishException(e);
         }
@@ -60,11 +59,10 @@ public class Main {
         FileUtils.writeLines(targetFile, content);
     }
 
-    private void createTargetDirectory(File targetFile) throws IOException {
+    private void createTargetDirectory(File targetFile) {
         File targetDirectory = targetFile.getParentFile();
-        if (!targetDirectory.mkdirs()) {
-            throw new IOException("Could not create " + targetDirectory.getAbsolutePath());
-        }
+        //noinspection ResultOfMethodCallIgnored
+        targetDirectory.mkdirs();
     }
 
 
