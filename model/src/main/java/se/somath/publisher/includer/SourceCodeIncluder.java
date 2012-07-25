@@ -14,7 +14,6 @@ public class SourceCodeIncluder {
         String includeTag = "";
         boolean inComment = false;
         boolean startTagFound = false;
-        List<String> sourceCode = null;
 
         for (String candidate : content) {
             if (candidate.startsWith("<!--")) {
@@ -31,7 +30,9 @@ public class SourceCodeIncluder {
                 includeParser.parse(includeTag);
                 includeTag = "";
 
-                sourceCode = readSourceFile();
+                List<String> sourceCode = readSourceFile();
+                result.addAll(sourceCode);
+                continue;
             }
 
             if (candidate.startsWith("<include") && !candidate.endsWith("/>") && !inComment) {
@@ -46,20 +47,17 @@ public class SourceCodeIncluder {
                 includeParser.parse(includeTag);
                 includeTag = "";
 
-                sourceCode = readSourceFile();
+                List<String> sourceCode = readSourceFile();
+                result.addAll(sourceCode);
 
                 startTagFound = false;
+                continue;
             }
 
             if (startTagFound && !inComment) {
                 includeTag += candidate;
             } else {
                 result.add(candidate);
-            }
-
-            if (sourceCode != null) {
-                result.addAll(sourceCode);
-                sourceCode = null;
             }
         }
 

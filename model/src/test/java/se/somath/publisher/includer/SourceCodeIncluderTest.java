@@ -7,6 +7,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class SourceCodeIncluderTest {
@@ -74,6 +75,29 @@ public class SourceCodeIncluderTest {
         verify(sourceCodeReader, never()).readFile("fileRoot", "fileRelativeTheRoot");
         assertThat(actual, is(given));
     }
+
+    @Test
+    public void shouldIncludeFile() {
+        List<String> given = new LinkedList<String>();
+        given.add("<p>");
+        given.add("    And the result is:");
+        given.add("</p>");
+        given.add("");
+        given.add("<include root=\"./model\"");
+        given.add("         file=\"pom.xml\"/>");
+        given.add("");
+        given.add("<h2>Pre and code</h2>");
+
+        SourceCodeReader sourceCodeReader = new SourceCodeReader();
+        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+
+        List<String> actual = includer.addIncludes(given);
+
+        int projectRow = 5;
+        String actualLine = actual.get(projectRow);
+        assertTrue("Expect to find the beginning of a pom, but found: \n" + actualLine, actualLine.contains("project"));
+    }
+
 
     private SourceCodeIncluder getSourceCodeIncluder(SourceCodeReader sourceCodeReader) {
         SourceCodeIncluder includer = new SourceCodeIncluder();
