@@ -17,23 +17,14 @@ public class SourceCodeReader {
 
 
     public List<String> readFile(String root, String fileName) {
-        File rootDir = locateRootDirectory(root);
-        Collection<File> files = listFiles(rootDir);
+        Collection<File> files = listFiles(root);
         File sourceCodeFile = findWantedSourceCodeFile(fileName, files);
 
         return readSourcecodeContent(sourceCodeFile);
     }
 
-    private File locateRootDirectory(String root) {
-        File rootDir = new File(root);
-
-        while (!rootDir.isDirectory()) {
-            rootDir = rootDir.getParentFile();
-        }
-        return rootDir;
-    }
-
-    private Collection<File> listFiles(File rootDir) {
+    private Collection<File> listFiles(String root) {
+        File rootDir = locateRootDirectory(root);
         IOFileFilter fileFilter = createFileFilter();
         IOFileFilter dirFilter = createDirectoryFilter();
 
@@ -63,6 +54,15 @@ public class SourceCodeReader {
         } catch (IOException e) {
             throw new PublishException(e);
         }
+    }
+
+    private File locateRootDirectory(String root) {
+        File rootDir = new File(root);
+
+        while (!rootDir.isDirectory()) {
+            rootDir = rootDir.getParentFile();
+        }
+        return rootDir;
     }
 
     private IOFileFilter createFileFilter() {
