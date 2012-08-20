@@ -19,6 +19,7 @@ public class IncludeParser {
     private String root;
     private String fileName;
     private String fileDisplayName;
+    private boolean shouldDisplayFileName = false;
 
     public void parse(String include) {
         Document document;
@@ -36,6 +37,7 @@ public class IncludeParser {
         root = findRootName(attributes);
         fileName = findFileName(attributes);
         fileDisplayName = findFileDisplayName(attributes);
+        shouldDisplayFileName = findShouldDisplayFileName(attributes);
     }
 
     public String getRoot() {
@@ -48,6 +50,10 @@ public class IncludeParser {
 
     public String getFileDisplayName() {
         return fileDisplayName;
+    }
+
+    public boolean shouldDisplayFileName() {
+        return shouldDisplayFileName;
     }
 
     private Document parseIncludeString(String include) throws ParserConfigurationException, SAXException, IOException {
@@ -80,6 +86,13 @@ public class IncludeParser {
     private String findFileDisplayName(NamedNodeMap attributes) {
         String attributeName = "fileDisplayName";
         return getNodeValue(attributes, attributeName);
+    }
+
+    private boolean findShouldDisplayFileName(NamedNodeMap attributes) {
+        String attributeName = "displayFileName";
+        String nodeValue = getNodeValue(attributes, attributeName);
+
+        return !nodeValue.equalsIgnoreCase("false");
     }
 
     private String getNodeValue(NamedNodeMap attributes, String attributeName) {

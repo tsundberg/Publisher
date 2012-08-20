@@ -65,7 +65,9 @@ public class SourceCodeIncluder {
     }
 
     private void addFormattedSourceCode(List<String> result) {
-        addFileName(result);
+        if (includeParser.shouldDisplayFileName()) {
+            addFileName(result);
+        }
         addStartPreTag(result);
         addEncodedSourceCode(result);
         addEndPreTag(result);

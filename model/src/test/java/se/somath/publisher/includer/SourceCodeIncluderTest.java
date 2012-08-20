@@ -6,8 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class SourceCodeIncluderTest {
@@ -94,8 +93,8 @@ public class SourceCodeIncluderTest {
         List<String> actual = includer.addIncludes(given);
 
         assertFileName(actual, "pom.xml");
-        assertPreTagStart(actual);
-        assertProjectRow(actual);
+        assertPreTagStart(actual, 5);
+        assertProjectRow(actual, 7);
         assertPreTagEnd(actual);
     }
 
@@ -118,19 +117,41 @@ public class SourceCodeIncluderTest {
         List<String> actual = includer.addIncludes(given);
 
         assertFileName(actual, "fileDisplayName.xml");
-        assertPreTagStart(actual);
-        assertProjectRow(actual);
+        assertPreTagStart(actual, 5);
+        assertProjectRow(actual, 7);
         assertPreTagEnd(actual);
     }
 
-    private void assertPreTagStart(List<String> actual) {
-        int preTagStartRow = 5;
+    @Test
+    public void shouldIncludeFileAndNotDisplayFileName() {
+        List<String> given = new LinkedList<String>();
+        given.add("<p>");
+        given.add("    And the result is:");
+        given.add("</p>");
+        given.add("");
+        given.add("<include root=\"./model\"");
+        given.add("         file=\"pom.xml\"");
+        given.add("         displayFileName=\"false\"/>");
+        given.add("");
+        given.add("<h2>Pre and code</h2>");
+
+        SourceCodeReader sourceCodeReader = new SourceCodeReader();
+        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+
+        List<String> actual = includer.addIncludes(given);
+
+        assertNoFileName(actual);
+        assertPreTagStart(actual, 4);
+        assertProjectRow(actual, 6);
+        assertPreTagEnd(actual);
+    }
+
+    private void assertPreTagStart(List<String> actual, int preTagStartRow) {
         String actualLine = actual.get(preTagStartRow);
         assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("<pre>"));
     }
 
-    private void assertProjectRow(List<String> actual) {
-        int projectRow = 7;
+    private void assertProjectRow(List<String> actual, int projectRow) {
         String actualLine = actual.get(projectRow);
         assertTrue("Expect to find the beginning of a pom, but found: \n" + actualLine + "\n\n", actualLine.contains("project"));
     }
@@ -146,6 +167,12 @@ public class SourceCodeIncluderTest {
         int fileNameRow = 4;
         String actualLine = actual.get(fileNameRow);
         assertTrue("Expect to find the filename in italics, but found: \n" + actualLine + "\n\n", actualLine.contains("<p><i>" + fileDisplayName + "</i></p>"));
+    }
+
+    private void assertNoFileName(List<String> actual) {
+        for (String actualLine : actual) {
+            assertFalse("Expected not to find the filename in italics and found " + actualLine, actualLine.contains("<p><i>pom.xml</i></p>"));
+        }
     }
 
     private SourceCodeIncluder getSourceCodeIncluder(SourceCodeReader sourceCodeReader) {

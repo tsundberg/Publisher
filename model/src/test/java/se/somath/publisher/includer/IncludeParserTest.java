@@ -36,4 +36,30 @@ public class IncludeParserTest {
         String actualFileDisplayName = parser.getFileDisplayName();
         assertThat(actualFileDisplayName, is(expectedFileDisplayName));
     }
+
+    @Test
+    public void shouldNotDisplayFileNameDefault() {
+        IncludeParser parser = new IncludeParser();
+
+        boolean expectedShouldDisplayFileName = true;
+        String given = "<include />";
+
+        parser.parse(given);
+
+        boolean actualShouldDisplayFileName = parser.shouldDisplayFileName();
+        assertThat(actualShouldDisplayFileName, is(expectedShouldDisplayFileName));
+    }
+
+    @Test
+    public void shouldParseDisplayFileName() {
+        IncludeParser parser = new IncludeParser();
+
+        boolean expectedShouldDisplayFileName = false;
+        String given = "<include displayFileName=\"false\"/>";
+
+        parser.parse(given);
+
+        boolean actualShouldDisplayFileName = parser.shouldDisplayFileName();
+        assertThat(actualShouldDisplayFileName, is(expectedShouldDisplayFileName));
+    }
 }
