@@ -65,10 +65,10 @@ public class SourceCodeIncluder {
     }
 
     private void addFormattedSourceCode(List<String> result) {
+        addFileName(result);
         addStartPreTag(result);
         addEncodedSourceCode(result);
         addEndPreTag(result);
-        addFileName(result);
     }
 
     private void addStartPreTag(List<String> result) {

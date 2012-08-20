@@ -93,10 +93,10 @@ public class SourceCodeIncluderTest {
 
         List<String> actual = includer.addIncludes(given);
 
+        assertFileName(actual, "pom.xml");
         assertPreTagStart(actual);
         assertProjectRow(actual);
         assertPreTagEnd(actual);
-        assertFileName(actual);
     }
 
     @Test
@@ -117,47 +117,36 @@ public class SourceCodeIncluderTest {
 
         List<String> actual = includer.addIncludes(given);
 
+        assertFileName(actual, "fileDisplayName.xml");
         assertPreTagStart(actual);
         assertProjectRow(actual);
         assertPreTagEnd(actual);
-        assertFileDisplayName(actual);
     }
 
     private void assertPreTagStart(List<String> actual) {
-        int preTagStartRow = 4;
+        int preTagStartRow = 5;
         String actualLine = actual.get(preTagStartRow);
         assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("<pre>"));
     }
 
     private void assertProjectRow(List<String> actual) {
-        int projectRow = 6;
+        int projectRow = 7;
         String actualLine = actual.get(projectRow);
         assertTrue("Expect to find the beginning of a pom, but found: \n" + actualLine + "\n\n", actualLine.contains("project"));
     }
 
     private void assertPreTagEnd(List<String> actual) {
-        int preEndTagRowOffset = 4;
+        int preEndTagRowOffset = 3;
         int preTagEndRow = actual.size() - preEndTagRowOffset;
         String actualLine = actual.get(preTagEndRow);
         assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("</pre>"));
     }
 
-    private void assertFileName(List<String> actual) {
-        int fileNameRowOffset = 3;
-        int fileNameRow = actual.size() - fileNameRowOffset;
+    private void assertFileName(List<String> actual, String fileDisplayName) {
+        int fileNameRow = 4;
         String actualLine = actual.get(fileNameRow);
-        String fileName = "pom.xml";
-        assertTrue("Expect to find the filename in italics, but found: \n" + actualLine + "\n\n", actualLine.contains("<p><i>" + fileName + "</i></p>"));
+        assertTrue("Expect to find the filename in italics, but found: \n" + actualLine + "\n\n", actualLine.contains("<p><i>" + fileDisplayName + "</i></p>"));
     }
-
-    private void assertFileDisplayName(List<String> actual) {
-        int fileNameRowOffset = 3;
-        int fileNameRow = actual.size() - fileNameRowOffset;
-        String actualLine = actual.get(fileNameRow);
-        String fileDisplayName = "fileDisplayName.xml";
-        assertTrue("Expect to find the file display name in italics, but found: \n" + actualLine + "\n\n", actualLine.contains("<p><i>" + fileDisplayName + "</i></p>"));
-    }
-
 
     private SourceCodeIncluder getSourceCodeIncluder(SourceCodeReader sourceCodeReader) {
         SourceCodeIncluder includer = new SourceCodeIncluder();
