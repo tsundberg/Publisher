@@ -15,10 +15,9 @@ public class SourceCodeReader {
     private static final String[] EXCLUDED_FILE_TYPES = {"iml"};
     private static final String[] EXCLUDED_DIRECTORIES = {"target", ".git", ".idea"};
 
-
     public List<String> readFile(String root, String fileName) {
         Collection<File> files = listFiles(root);
-        File sourceCodeFile = findWantedSourceCodeFile(fileName, files);
+        File sourceCodeFile = findWantedSourceCodeFile(root, fileName, files);
 
         return readSourcecodeContent(sourceCodeFile);
     }
@@ -29,31 +28,6 @@ public class SourceCodeReader {
         IOFileFilter dirFilter = createDirectoryFilter();
 
         return FileUtils.listFiles(rootDir, fileFilter, dirFilter);
-    }
-
-    private File findWantedSourceCodeFile(String fileName, Collection<File> files) {
-        File sourceCodeFile = null;
-
-        for (File candidate : files) {
-            String candidatePath = candidate.getPath();
-            if (candidatePath.endsWith(fileName)) {
-                sourceCodeFile = candidate;
-                break;
-            }
-        }
-        return sourceCodeFile;
-    }
-
-    private List<String> readSourcecodeContent(File sourceCodeFile) {
-        if (sourceCodeFile == null) {
-            return Collections.emptyList();
-        }
-
-        try {
-            return FileUtils.readLines(sourceCodeFile);
-        } catch (IOException e) {
-            throw new PublishException(e);
-        }
     }
 
     private File locateRootDirectory(String root) {
@@ -82,4 +56,70 @@ public class SourceCodeReader {
         }
         return dirFilter;
     }
+
+    File findWantedSourceCodeFile(String root, String fileName, Collection<File> files) {
+        File sourceCodeFile = null;
+
+        for (File candidate : files) {
+            String candidatePath = getCandidatePath(candidate);
+            String filePath = getFilePath(root, fileName);
+
+            if (candidatePath.contains(filePath)) {
+                return candidate;
+            }
+        }
+
+        return sourceCodeFile;
+    }
+
+    private String getCandidatePath(File candidate) {
+        try {
+            return candidate.getCanonicalPath();
+        } catch (IOException e) {
+            throw new PublishException(e);
+        }
+    }
+
+    private String getFilePath(String root, String fileName) {
+        String fixedRoot = removeLeadingFileSeparator(root);
+        fixedRoot = addEndingFileSeparator(fixedRoot);
+
+        String fixedFileName = removeLeadingFileSeparator(fileName);
+
+        return fixedRoot + fixedFileName;
+    }
+
+    private String addEndingFileSeparator(String root) {
+        if (!root.endsWith(File.separator)) {
+            root = root + File.separator;
+        }
+        return root;
+    }
+
+    private String removeLeadingFileSeparator(String path) {
+        String pathSeparator = File.separator;
+
+        if (path.startsWith("." + pathSeparator)) {
+            int beginIndex = 2;
+            path = path.substring(beginIndex);
+        } else if (path.startsWith(pathSeparator)) {
+            int beginIndex = 1;
+            path = path.substring(beginIndex);
+        }
+
+        return path;
+    }
+
+    private List<String> readSourcecodeContent(File sourceCodeFile) {
+        if (sourceCodeFile == null) {
+            return Collections.emptyList();
+        }
+
+        try {
+            return FileUtils.readLines(sourceCodeFile);
+        } catch (IOException e) {
+            throw new PublishException(e);
+        }
+    }
+
 }
