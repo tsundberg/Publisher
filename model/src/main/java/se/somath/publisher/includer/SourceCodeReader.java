@@ -121,5 +121,4 @@ public class SourceCodeReader {
             throw new PublishException(e);
         }
     }
-
 }
