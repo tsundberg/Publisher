@@ -18,7 +18,7 @@ public class Main {
         try {
             List<String> content = readSourceFile(sourceDirectory, defaultFileName);
             content = formatHtml(content);
-            content = addIncludes(content);
+            content = addSourceCode(content);
             writeTargetFile(targetDirectory, content, defaultFileName);
         } catch (FileNotFoundException e) {
             throw new PublishException(e);
@@ -46,7 +46,7 @@ public class Main {
         return formatter.format(unFormattedContent);
     }
 
-    private List<String> addIncludes(List<String> unIncludedContent) {
+    private List<String> addSourceCode(List<String> unIncludedContent) {
         SourceCodeIncluder includer = new SourceCodeIncluder();
         return includer.addIncludes(unIncludedContent);
     }
