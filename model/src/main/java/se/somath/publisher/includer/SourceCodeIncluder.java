@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SourceCodeIncluder {
     private SourceCodeReader sourceCodeReader = new SourceCodeReader();
-    private IncludeParser includeParser = new IncludeParser();
+    private IncludeSourceCodeParser includeSourceCodeParser = new IncludeSourceCodeParser();
 
     public List<String> addIncludes(List<String> content) {
 
@@ -29,7 +29,7 @@ public class SourceCodeIncluder {
             if (candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
                 includeTag = candidate;
 
-                includeParser.parse(includeTag);
+                includeSourceCodeParser.parse(includeTag);
                 includeTag = "";
 
                 addFormattedSourceCode(result);
@@ -45,7 +45,7 @@ public class SourceCodeIncluder {
             if (!candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
                 includeTag += candidate;
 
-                includeParser.parse(includeTag);
+                includeSourceCodeParser.parse(includeTag);
                 includeTag = "";
 
                 addFormattedSourceCode(result);
@@ -65,7 +65,7 @@ public class SourceCodeIncluder {
     }
 
     private void addFormattedSourceCode(List<String> result) {
-        if (includeParser.shouldDisplayFileName()) {
+        if (includeSourceCodeParser.shouldDisplayFileName()) {
             addFileName(result);
         }
         addStartPreTag(result);
@@ -89,8 +89,8 @@ public class SourceCodeIncluder {
     }
 
     private void addFileName(List<String> result) {
-        String fileName = includeParser.getFileName();
-        String fileDisplayName = includeParser.getFileDisplayName();
+        String fileName = includeSourceCodeParser.getFileName();
+        String fileDisplayName = includeSourceCodeParser.getFileDisplayName();
         if (fileDisplayName.length() > 0) {
             result.add("<p><i>" + fileDisplayName + "</i></p>");
         } else {
@@ -100,8 +100,8 @@ public class SourceCodeIncluder {
 
     private List<String> readSourceFile() {
         List<String> sourceCode;
-        String root = includeParser.getRoot();
-        String fileName = includeParser.getFileName();
+        String root = includeSourceCodeParser.getRoot();
+        String fileName = includeSourceCodeParser.getFileName();
 
         sourceCode = sourceCodeReader.readFile(root, fileName);
         return sourceCode;
@@ -111,7 +111,7 @@ public class SourceCodeIncluder {
         this.sourceCodeReader = sourceCodeReader;
     }
 
-    public void setIncludeParser(IncludeParser includeParser) {
-        this.includeParser = includeParser;
+    public void setIncludeSourceCodeParser(IncludeSourceCodeParser includeSourceCodeParser) {
+        this.includeSourceCodeParser = includeSourceCodeParser;
     }
 }

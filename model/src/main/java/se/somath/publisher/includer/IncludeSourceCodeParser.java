@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 
-public class IncludeParser {
+public class IncludeSourceCodeParser {
     private String root;
     private String fileName;
     private String fileDisplayName;

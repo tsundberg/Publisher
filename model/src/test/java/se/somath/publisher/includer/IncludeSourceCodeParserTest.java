@@ -5,11 +5,11 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class IncludeParserTest {
+public class IncludeSourceCodeParserTest {
 
     @Test
     public void shouldParseRootAndFileName() {
-        IncludeParser parser = new IncludeParser();
+        IncludeSourceCodeParser parser = new IncludeSourceCodeParser();
 
         String expectedRoot = "fileRoot";
         String expectedFileName = "fileRelativeTheRoot";
@@ -26,7 +26,7 @@ public class IncludeParserTest {
 
     @Test
     public void shouldParseFileDisplayName() {
-        IncludeParser parser = new IncludeParser();
+        IncludeSourceCodeParser parser = new IncludeSourceCodeParser();
 
         String expectedFileDisplayName = "fileDisplayName";
         String given = "<include fileDisplayName=\"" + expectedFileDisplayName + "\"/>";
@@ -39,7 +39,7 @@ public class IncludeParserTest {
 
     @Test
     public void shouldNotDisplayFileNameDefault() {
-        IncludeParser parser = new IncludeParser();
+        IncludeSourceCodeParser parser = new IncludeSourceCodeParser();
 
         boolean expectedShouldDisplayFileName = true;
         String given = "<include />";
@@ -52,7 +52,7 @@ public class IncludeParserTest {
 
     @Test
     public void shouldParseDisplayFileName() {
-        IncludeParser parser = new IncludeParser();
+        IncludeSourceCodeParser parser = new IncludeSourceCodeParser();
 
         boolean expectedShouldDisplayFileName = false;
         String given = "<include displayFileName=\"false\"/>";

@@ -179,8 +179,8 @@ public class SourceCodeIncluderTest {
         SourceCodeIncluder includer = new SourceCodeIncluder();
         includer.setSourceCodeReader(sourceCodeReader);
 
-        IncludeParser includeParser = new IncludeParser();
-        includer.setIncludeParser(includeParser);
+        IncludeSourceCodeParser includeParser = new IncludeSourceCodeParser();
+        includer.setIncludeSourceCodeParser(includeParser);
         return includer;
     }
 }
