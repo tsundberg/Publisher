@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import se.somath.publisher.excpetion.PublishException;
 import se.somath.publisher.formatter.HtmlFormatter;
+import se.somath.publisher.includer.FileTreeIncluder;
 import se.somath.publisher.includer.SourceCodeIncluder;
 
 import java.io.*;
@@ -19,6 +20,7 @@ public class Main {
             List<String> content = readSourceFile(sourceDirectory, defaultFileName);
             content = formatHtml(content);
             content = addSourceCode(content);
+            content = addFileTrees(content);
             writeTargetFile(targetDirectory, content, defaultFileName);
         } catch (FileNotFoundException e) {
             throw new PublishException(e);
@@ -48,6 +50,11 @@ public class Main {
 
     private List<String> addSourceCode(List<String> unIncludedContent) {
         SourceCodeIncluder includer = new SourceCodeIncluder();
+        return includer.addIncludes(unIncludedContent);
+    }
+
+    private List<String> addFileTrees(List<String> unIncludedContent) {
+        FileTreeIncluder includer = new FileTreeIncluder();
         return includer.addIncludes(unIncludedContent);
     }
 

@@ -11,6 +11,11 @@ import java.util.List;
  * Inspired from http://mama.indstate.edu/users/ice/tree/
  */
 public class FileTreeIncluder {
+    public List<String> addIncludes(List<String> unIncludedContent) {
+        // todo enble
+        return unIncludedContent;
+    }
+
     /**
      * Build a file tree and apply the default file filter
      *
