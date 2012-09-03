@@ -1,7 +1,6 @@
 package se.somath.publisher.includer;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import se.somath.publisher.excpetion.PublishException;
 
@@ -11,9 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static se.somath.publisher.includer.FileFilter.createDirectoryFilter;
+import static se.somath.publisher.includer.FileFilter.createFileFilter;
+
 public class SourceCodeReader {
-    private static final String[] EXCLUDED_FILE_TYPES = {"iml"};
-    private static final String[] EXCLUDED_DIRECTORIES = {"target", ".git", ".idea"};
 
     public List<String> readFile(String root, String fileName) {
         Collection<File> files = listFiles(root);
@@ -37,24 +37,6 @@ public class SourceCodeReader {
             rootDir = rootDir.getParentFile();
         }
         return rootDir;
-    }
-
-    private IOFileFilter createFileFilter() {
-        IOFileFilter fileFilter = FileFilterUtils.trueFileFilter();
-        for (String fileType : EXCLUDED_FILE_TYPES) {
-            IOFileFilter imlFilter = FileFilterUtils.notFileFilter(FileFilterUtils.suffixFileFilter(fileType));
-            fileFilter = FileFilterUtils.and(fileFilter, imlFilter);
-        }
-        return fileFilter;
-    }
-
-    private IOFileFilter createDirectoryFilter() {
-        IOFileFilter dirFilter = FileFilterUtils.trueFileFilter();
-        for (String directoryName : EXCLUDED_DIRECTORIES) {
-            IOFileFilter imlFilter = FileFilterUtils.notFileFilter(FileFilterUtils.suffixFileFilter(directoryName));
-            dirFilter = FileFilterUtils.and(dirFilter, imlFilter);
-        }
-        return dirFilter;
     }
 
     File findWantedSourceCodeFile(String root, String fileName, Collection<File> files) {
