@@ -1,7 +1,8 @@
-package se.somath.publisher.includer;
+package se.somath.publisher.builder;
 
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
+import se.somath.publisher.includer.FileFilter;
 
 import java.io.File;
 import java.util.LinkedList;

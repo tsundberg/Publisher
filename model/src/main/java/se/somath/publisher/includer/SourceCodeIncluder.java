@@ -1,12 +1,12 @@
 package se.somath.publisher.includer;
 
-import se.somath.publisher.formatter.HtmlEncoder;
+import se.somath.publisher.builder.SourceCodeBuilder;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class SourceCodeIncluder {
-    private SourceCodeReader sourceCodeReader = new SourceCodeReader();
+    private SourceCodeBuilder sourceCodeBuilder = new SourceCodeBuilder();
     private IncludeSourceCodeParser includeSourceCodeParser = new IncludeSourceCodeParser();
 
     public List<String> addIncludes(List<String> content) {
@@ -32,7 +32,7 @@ public class SourceCodeIncluder {
                 includeSourceCodeParser.parse(includeTag);
                 includeTag = "";
 
-                addFormattedSourceCode(result);
+                result = getFormattedSourceCode(result, includeSourceCodeParser);
                 continue;
             }
 
@@ -48,7 +48,7 @@ public class SourceCodeIncluder {
                 includeSourceCodeParser.parse(includeTag);
                 includeTag = "";
 
-                addFormattedSourceCode(result);
+                result = getFormattedSourceCode(result, includeSourceCodeParser);
 
                 startTagFound = false;
                 continue;
@@ -64,54 +64,15 @@ public class SourceCodeIncluder {
         return result;
     }
 
-    private void addFormattedSourceCode(List<String> result) {
-        if (includeSourceCodeParser.shouldDisplayFileName()) {
-            addFileName(result);
-        }
-        addStartPreTag(result);
-        addEncodedSourceCode(result);
-        addEndPreTag(result);
-    }
-
-    private void addStartPreTag(List<String> result) {
-        result.add("<pre>");
-    }
-
-    private void addEncodedSourceCode(List<String> result) {
-        List<String> unFormattedSourceCode = readSourceFile();
-        HtmlEncoder htmlEncoder = new HtmlEncoder();
-        List<String> formattedSourceCode = htmlEncoder.encode(unFormattedSourceCode);
-        result.addAll(formattedSourceCode);
-    }
-
-    private void addEndPreTag(List<String> result) {
-        result.add("</pre>");
-    }
-
-    private void addFileName(List<String> result) {
-        String fileName = includeSourceCodeParser.getFileName();
-        String fileDisplayName = includeSourceCodeParser.getFileDisplayName();
-        if (fileDisplayName.length() > 0) {
-            result.add("<p><i>" + fileDisplayName + "</i></p>");
-        } else {
-            result.add("<p><i>" + fileName + "</i></p>");
-        }
-    }
-
-    private List<String> readSourceFile() {
-        List<String> sourceCode;
-        String root = includeSourceCodeParser.getRoot();
-        String fileName = includeSourceCodeParser.getFileName();
-
-        sourceCode = sourceCodeReader.readFile(root, fileName);
-        return sourceCode;
-    }
-
-    public void setSourceCodeReader(SourceCodeReader sourceCodeReader) {
-        this.sourceCodeReader = sourceCodeReader;
+    private List<String> getFormattedSourceCode(List<String> result, IncludeSourceCodeParser includeSourceCodeParser) {
+        return sourceCodeBuilder.getFormattedSourceCode(result, includeSourceCodeParser);
     }
 
     public void setIncludeSourceCodeParser(IncludeSourceCodeParser includeSourceCodeParser) {
         this.includeSourceCodeParser = includeSourceCodeParser;
+    }
+
+    public void setSourceCodeBuilder(SourceCodeBuilder sourceCodeBuilder) {
+        this.sourceCodeBuilder = sourceCodeBuilder;
     }
 }

@@ -1,6 +1,7 @@
 package se.somath.publisher.includer;
 
 import org.junit.Test;
+import se.somath.publisher.builder.SourceCodeBuilder;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -177,7 +178,10 @@ public class SourceCodeIncluderTest {
 
     private SourceCodeIncluder getSourceCodeIncluder(SourceCodeReader sourceCodeReader) {
         SourceCodeIncluder includer = new SourceCodeIncluder();
-        includer.setSourceCodeReader(sourceCodeReader);
+
+        SourceCodeBuilder sourceCodeBuilder = new SourceCodeBuilder();
+        sourceCodeBuilder.setSourceCodeReader(sourceCodeReader);
+        includer.setSourceCodeBuilder(sourceCodeBuilder);
 
         IncludeSourceCodeParser includeParser = new IncludeSourceCodeParser();
         includer.setIncludeSourceCodeParser(includeParser);
