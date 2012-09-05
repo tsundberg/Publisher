@@ -30,9 +30,9 @@ public class SourceCodeIncluder {
                 includeTag = candidate;
 
                 includeSourceCodeParser.parse(includeTag);
+                result = getFormattedSourceCode(result, includeSourceCodeParser);
                 includeTag = "";
 
-                result = getFormattedSourceCode(result, includeSourceCodeParser);
                 continue;
             }
 
@@ -46,9 +46,8 @@ public class SourceCodeIncluder {
                 includeTag += candidate;
 
                 includeSourceCodeParser.parse(includeTag);
-                includeTag = "";
-
                 result = getFormattedSourceCode(result, includeSourceCodeParser);
+                includeTag = "";
 
                 startTagFound = false;
                 continue;
