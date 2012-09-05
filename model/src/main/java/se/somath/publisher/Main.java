@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import se.somath.publisher.excpetion.PublishException;
 import se.somath.publisher.formatter.HtmlFormatter;
-import se.somath.publisher.includer.FileTreeIncluder;
+import se.somath.publisher.includer.FileTreeBuilder;
 import se.somath.publisher.includer.SourceCodeIncluder;
 
 import java.io.*;
@@ -54,8 +54,8 @@ public class Main {
     }
 
     private List<String> addFileTrees(List<String> unIncludedContent) {
-        FileTreeIncluder includer = new FileTreeIncluder();
-        return includer.addIncludes(unIncludedContent);
+        FileTreeBuilder builder = new FileTreeBuilder();
+        return builder.addIncludes(unIncludedContent);
     }
 
     private void writeTargetFile(String targetDirectory, List<String> content, String fileName) throws IOException {
