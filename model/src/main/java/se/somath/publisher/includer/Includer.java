@@ -23,40 +23,36 @@ public class Includer {
         boolean startTagFound = false;
 
         for (String candidate : content) {
-            if (candidate.startsWith("<!--")) {
+            if (commentStart(candidate)) {
                 inComment = true;
             }
 
-            if (candidate.endsWith("-->")) {
+            if (commentEnd(candidate)) {
                 inComment = false;
             }
 
-            if (candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
+            if (completeIncludeLine(inComment, candidate)) {
                 includeTag = candidate;
-
                 result = getIncludeContent(result, includeTag);
                 includeTag = "";
-
                 continue;
             }
 
-            if (candidate.startsWith("<include") && !candidate.endsWith("/>") && !inComment) {
+            if (initialIncludeLine(inComment, candidate)) {
                 includeTag = candidate;
                 startTagFound = true;
                 continue;
             }
 
-            if (!candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
+            if (endingIncludeLine(inComment, candidate)) {
                 includeTag += candidate;
-
                 result = getIncludeContent(result, includeTag);
                 includeTag = "";
-
                 startTagFound = false;
                 continue;
             }
 
-            if (startTagFound && !inComment) {
+            if (continuingIncludeLine(inComment, startTagFound)) {
                 includeTag += candidate;
             } else {
                 result.add(candidate);
@@ -64,6 +60,30 @@ public class Includer {
         }
 
         return result;
+    }
+
+    private boolean commentStart(String candidate) {
+        return candidate.startsWith("<!--");
+    }
+
+    private boolean commentEnd(String candidate) {
+        return candidate.endsWith("-->");
+    }
+
+    private boolean completeIncludeLine(boolean inComment, String candidate) {
+        return candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment;
+    }
+
+    private boolean initialIncludeLine(boolean inComment, String candidate) {
+        return candidate.startsWith("<include") && !candidate.endsWith("/>") && !inComment;
+    }
+
+    private boolean endingIncludeLine(boolean inComment, String candidate) {
+        return !candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment;
+    }
+
+    private boolean continuingIncludeLine(boolean inComment, boolean startTagFound) {
+        return startTagFound && !inComment;
     }
 
     private List<String> getIncludeContent(List<String> result, String includeTag) {
