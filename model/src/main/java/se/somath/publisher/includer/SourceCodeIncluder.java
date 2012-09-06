@@ -29,8 +29,7 @@ public class SourceCodeIncluder {
             if (candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
                 includeTag = candidate;
 
-                includeSourceCodeParser.parse(includeTag);
-                result = getFormattedSourceCode(result, includeSourceCodeParser);
+                result = getIncludeContent(result, includeTag);
                 includeTag = "";
 
                 continue;
@@ -45,8 +44,7 @@ public class SourceCodeIncluder {
             if (!candidate.startsWith("<include") && candidate.endsWith("/>") && !inComment) {
                 includeTag += candidate;
 
-                includeSourceCodeParser.parse(includeTag);
-                result = getFormattedSourceCode(result, includeSourceCodeParser);
+                result = getIncludeContent(result, includeTag);
                 includeTag = "";
 
                 startTagFound = false;
@@ -63,8 +61,11 @@ public class SourceCodeIncluder {
         return result;
     }
 
-    private List<String> getFormattedSourceCode(List<String> result, IncludeSourceCodeParser includeSourceCodeParser) {
-        return sourceCodeBuilder.getFormattedSourceCode(result, includeSourceCodeParser);
+    private List<String> getIncludeContent(List<String> result, String includeTag) {
+        includeSourceCodeParser.parse(includeTag);
+        result = sourceCodeBuilder.getFormattedSourceCode(result, includeSourceCodeParser);
+
+        return result;
     }
 
     public void setIncludeSourceCodeParser(IncludeSourceCodeParser includeSourceCodeParser) {
