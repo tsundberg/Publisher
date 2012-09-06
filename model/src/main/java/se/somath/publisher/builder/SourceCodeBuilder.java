@@ -1,8 +1,8 @@
 package se.somath.publisher.builder;
 
 import se.somath.publisher.formatter.HtmlEncoder;
-import se.somath.publisher.includer.IncludeSourceCodeParser;
 import se.somath.publisher.includer.SourceCodeReader;
+import se.somath.publisher.parser.IncludeSourceCodeParser;
 
 import java.util.List;
 

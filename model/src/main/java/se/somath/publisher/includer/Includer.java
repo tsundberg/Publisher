@@ -3,6 +3,7 @@ package se.somath.publisher.includer;
 import se.somath.publisher.builder.FileTreeBuilder;
 import se.somath.publisher.builder.SourceCodeBuilder;
 import se.somath.publisher.parser.IncludeFileTreeParser;
+import se.somath.publisher.parser.IncludeSourceCodeParser;
 
 import java.util.LinkedList;
 import java.util.List;

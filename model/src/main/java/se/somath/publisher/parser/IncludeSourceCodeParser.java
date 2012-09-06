@@ -1,4 +1,4 @@
-package se.somath.publisher.includer;
+package se.somath.publisher.parser;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;

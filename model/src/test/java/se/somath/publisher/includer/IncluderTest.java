@@ -2,6 +2,7 @@ package se.somath.publisher.includer;
 
 import org.junit.Test;
 import se.somath.publisher.builder.SourceCodeBuilder;
+import se.somath.publisher.parser.IncludeSourceCodeParser;
 
 import java.util.LinkedList;
 import java.util.List;

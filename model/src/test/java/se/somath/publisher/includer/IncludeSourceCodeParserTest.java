@@ -1,6 +1,7 @@
 package se.somath.publisher.includer;
 
 import org.junit.Test;
+import se.somath.publisher.parser.IncludeSourceCodeParser;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
