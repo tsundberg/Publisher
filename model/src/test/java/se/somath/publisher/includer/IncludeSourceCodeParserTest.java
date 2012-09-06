@@ -13,7 +13,7 @@ public class IncludeSourceCodeParserTest {
 
         String expectedRoot = "fileRoot";
         String expectedFileName = "fileRelativeTheRoot";
-        String given = "<include root=\"" + expectedRoot + "\" file=\"" + expectedFileName + "\"/>";
+        String given = "<include-source-code root=\"" + expectedRoot + "\" file=\"" + expectedFileName + "\"/>";
 
         parser.parse(given);
 
@@ -29,7 +29,7 @@ public class IncludeSourceCodeParserTest {
         IncludeSourceCodeParser parser = new IncludeSourceCodeParser();
 
         String expectedFileDisplayName = "fileDisplayName";
-        String given = "<include fileDisplayName=\"" + expectedFileDisplayName + "\"/>";
+        String given = "<include-source-code fileDisplayName=\"" + expectedFileDisplayName + "\"/>";
 
         parser.parse(given);
 
@@ -42,7 +42,7 @@ public class IncludeSourceCodeParserTest {
         IncludeSourceCodeParser parser = new IncludeSourceCodeParser();
 
         boolean expectedShouldDisplayFileName = true;
-        String given = "<include />";
+        String given = "<include-source-code />";
 
         parser.parse(given);
 
@@ -55,7 +55,7 @@ public class IncludeSourceCodeParserTest {
         IncludeSourceCodeParser parser = new IncludeSourceCodeParser();
 
         boolean expectedShouldDisplayFileName = false;
-        String given = "<include displayFileName=\"false\"/>";
+        String given = "<include-source-code displayFileName=\"false\"/>";
 
         parser.parse(given);
 

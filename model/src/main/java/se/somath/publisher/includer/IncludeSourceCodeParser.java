@@ -65,7 +65,7 @@ public class IncludeSourceCodeParser {
     }
 
     private NamedNodeMap findIncludeTag(Document document) {
-        String tagName = "include";
+        String tagName = "include-source-code";
         NodeList elements = document.getElementsByTagName(tagName);
         int theOnlyExpectedElement = 0;
         Node item = elements.item(theOnlyExpectedElement);

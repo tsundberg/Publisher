@@ -62,8 +62,16 @@ public class SourceCodeIncluder {
     }
 
     private List<String> getIncludeContent(List<String> result, String includeTag) {
-        includeSourceCodeParser.parse(includeTag);
-        result = sourceCodeBuilder.getFormattedSourceCode(result, includeSourceCodeParser);
+        if (includeTag.contains("include-source-code")) {
+            includeSourceCodeParser.parse(includeTag);
+            return sourceCodeBuilder.getFormattedSourceCode(result, includeSourceCodeParser);
+        }
+
+        if (includeTag.contains("include-file-tree")) {
+            // includeSourceCodeParser.parse(includeTag);
+            // return sourceCodeBuilder.getFormattedSourceCode(result, includeSourceCodeParser);
+            return result;
+        }
 
         return result;
     }

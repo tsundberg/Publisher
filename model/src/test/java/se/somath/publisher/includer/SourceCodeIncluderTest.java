@@ -16,7 +16,7 @@ public class SourceCodeIncluderTest {
     public void shouldCallReadFileWithIncludeOnOneLine() {
         List<String> given = new LinkedList<String>();
 
-        given.add("<include root=\"fileRoot\" file=\"fileRelativeTheRoot\"/>");
+        given.add("<include-source-code root=\"fileRoot\" file=\"fileRelativeTheRoot\"/>");
 
         SourceCodeReader sourceCodeReader = mock(SourceCodeReader.class);
         SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
@@ -30,7 +30,7 @@ public class SourceCodeIncluderTest {
     public void shouldCallReadFileWithIncludeOnTwoLines() {
         List<String> given = new LinkedList<String>();
 
-        given.add("<include root=\"fileRoot\" ");
+        given.add("<include-source-code root=\"fileRoot\" ");
         given.add("file=\"fileRelativeTheRoot\"/>");
 
         SourceCodeReader sourceCodeReader = mock(SourceCodeReader.class);
@@ -45,7 +45,7 @@ public class SourceCodeIncluderTest {
     public void shouldCallReadFileWithIncludeOnThreeLines() {
         List<String> given = new LinkedList<String>();
 
-        given.add("<include ");
+        given.add("<include-source-code ");
         given.add("root=\"fileRoot\" ");
         given.add("file=\"fileRelativeTheRoot\"/>");
 
@@ -62,7 +62,7 @@ public class SourceCodeIncluderTest {
         List<String> given = new LinkedList<String>();
 
         given.add("<!--");
-        given.add("<include ");
+        given.add("<include-source-code ");
         given.add("root=\"fileRoot\" ");
         given.add("file=\"fileRelativeTheRoot\"/>");
         given.add("-->");
@@ -83,7 +83,7 @@ public class SourceCodeIncluderTest {
         given.add("    And the result is:");
         given.add("</p>");
         given.add("");
-        given.add("<include root=\"./model\"");
+        given.add("<include-source-code root=\"./model\"");
         given.add("         file=\"pom.xml\"/>");
         given.add("");
         given.add("<h2>Pre and code</h2>");
@@ -106,7 +106,7 @@ public class SourceCodeIncluderTest {
         given.add("    And the result is:");
         given.add("</p>");
         given.add("");
-        given.add("<include root=\"./model\"");
+        given.add("<include-source-code root=\"./model\"");
         given.add("         file=\"pom.xml\"");
         given.add("         fileDisplayName=\"fileDisplayName.xml\"/>");
         given.add("");
@@ -130,7 +130,7 @@ public class SourceCodeIncluderTest {
         given.add("    And the result is:");
         given.add("</p>");
         given.add("");
-        given.add("<include root=\"./model\"");
+        given.add("<include-source-code root=\"./model\"");
         given.add("         file=\"pom.xml\"");
         given.add("         displayFileName=\"false\"/>");
         given.add("");
