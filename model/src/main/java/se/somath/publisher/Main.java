@@ -64,6 +64,4 @@ public class Main {
         //noinspection ResultOfMethodCallIgnored
         targetDirectory.mkdirs();
     }
-
-
 }

@@ -42,7 +42,7 @@
 <p> Simple file include: </p>
 
 <pre>
-&lt;include root="./acceptance-test"
+&lt;include-source-code root="./acceptance-test"
          file="pom.xml"/&gt;
 </pre>
 
@@ -89,7 +89,32 @@
         &lt;/dependency&gt;
     &lt;/dependencies&gt;
 &lt;/project&gt;
- </pre>
+</pre>
+
+<p> You can include a file tree like this: </p>
+
+<pre>
+&lt;include-file-tree root="./acceptance-test"/&gt;
+</pre>
+
+<p> And the result is: </p>
+
+<pre>
+acceptance-test
+|-- pom.xml
+`-- src
+    |-- main
+    |   `-- resources
+    |       `-- index.html
+    `-- test
+        |-- java
+        |   `-- se
+        |       `-- somath
+        |           `-- publisher
+        |               `-- AcceptanceTest.java
+        `-- resources
+            `-- expected-index.html
+</pre>
 
 <h2>Pre and code</h2>
 

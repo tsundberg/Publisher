@@ -19,9 +19,11 @@ public class FileTreeBuilder {
      * @param root the root directory to build from
      * @return a list of Strings with all files properly formatted
      */
-    public List<String> buildFileTree(File root) {
+    public List<String> buildFileTree(String root) {
+        File rootDirectory = new File(root);
+
         IOFileFilter fileFilter = FileFilterUtils.and(FileFilter.createFileFilter(), FileFilter.createDirectoryFilter());
-        return buildFileTree(root, fileFilter);
+        return buildFileTree(rootDirectory, fileFilter);
     }
 
     /**
@@ -65,9 +67,9 @@ public class FileTreeBuilder {
     private void buildFileTree(String prefix, File file, boolean isTail, List<String> result, IOFileFilter fileFilter) {
         String line;
         if (isTail) {
-            line = prefix + "`── " + file.getName();
+            line = prefix + "`-- " + file.getName();
         } else {
-            line = prefix + "|── " + file.getName();
+            line = prefix + "|-- " + file.getName();
         }
         result.add(line);
 
@@ -77,7 +79,7 @@ public class FileTreeBuilder {
             if (isTail) {
                 newPrefix = prefix + "    ";
             } else {
-                newPrefix = prefix + "│   ";
+                newPrefix = prefix + "|   ";
             }
             for (int i = 0; i < files.length - 1; i++) {
                 File current = files[i];

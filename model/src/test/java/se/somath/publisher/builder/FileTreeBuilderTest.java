@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -14,18 +13,17 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 /**
  * Inspired from http://mama.indstate.edu/users/ice/tree/
  */
 public class FileTreeBuilderTest {
+    private String rootName;
     private File root;
 
     @Before
     public void createTestDirectory() throws IOException {
-        String rootName = "./target/test-directory-to-be-deleted/my-app";
+        rootName = "./target/test-directory-to-be-deleted/my-app";
         root = new File(rootName);
         FileUtils.forceMkdir(root);
         FileUtils.touch(new File(rootName + "/pom.xml"));
@@ -45,7 +43,7 @@ public class FileTreeBuilderTest {
 
     @Test
     public void shouldBuildAFileLayoutTreeWithOutFile() {
-        File givenRoot = new File("/undefined");
+        String givenRoot = "/undefined";
 
         List<String> expected = new LinkedList<String>();
         expected.add("<pre>");
@@ -65,26 +63,26 @@ public class FileTreeBuilderTest {
         expected.add("my-app");
         expected.add("|-- pom.xml");
         expected.add("|-- readme.txt");
-        expected.add("`── src");
-        expected.add("    |── main");
-        expected.add("    │   |── java");
-        expected.add("    │   │   `── com");
-        expected.add("    │   │       |── foo");
-        expected.add("    │   │       │   |── Bap.java");
-        expected.add("    │   │       │   `── Bapa.java");
-        expected.add("    │   │       `── mc");
-        expected.add("    │   │           `── App.java");
-        expected.add("    │   `── resources");
-        expected.add("    │       `── app.properties");
-        expected.add("    `── test");
-        expected.add("        `── java");
-        expected.add("            `── com");
-        expected.add("                `── mc");
-        expected.add("                    `── AppTest.java");
+        expected.add("`-- src");
+        expected.add("    |-- main");
+        expected.add("    |   |-- java");
+        expected.add("    |   |   `-- com");
+        expected.add("    |   |       |-- foo");
+        expected.add("    |   |       |   |-- Bap.java");
+        expected.add("    |   |       |   `-- Bapa.java");
+        expected.add("    |   |       `-- mc");
+        expected.add("    |   |           `-- App.java");
+        expected.add("    |   `-- resources");
+        expected.add("    |       `-- app.properties");
+        expected.add("    `-- test");
+        expected.add("        `-- java");
+        expected.add("            `-- com");
+        expected.add("                `-- mc");
+        expected.add("                    `-- AppTest.java");
         expected.add("</pre>");
 
         FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
-        List<String> actual = fileTreeBuilder.buildFileTree(root);
+        List<String> actual = fileTreeBuilder.buildFileTree(rootName);
 
         assertThat(actual, is(expected));
     }
@@ -96,42 +94,29 @@ public class FileTreeBuilderTest {
         expected.add("my-app");
         expected.add("|-- pom.xml");
         expected.add("|-- readme.txt");
-        expected.add("|── src");
-        expected.add("│   |── main");
-        expected.add("│   │   |── java");
-        expected.add("│   │   │   `── com");
-        expected.add("│   │   │       |── foo");
-        expected.add("│   │   │       │   |── Bap.java");
-        expected.add("│   │   │       │   `── Bapa.java");
-        expected.add("│   │   │       `── mc");
-        expected.add("│   │   │           `── App.java");
-        expected.add("│   │   `── resources");
-        expected.add("│   │       `── app.properties");
-        expected.add("│   `── test");
-        expected.add("│       `── java");
-        expected.add("│           `── com");
-        expected.add("│               `── mc");
-        expected.add("│                   `── AppTest.java");
-        expected.add("`── target");
-        expected.add("    `── classes");
+        expected.add("|-- src");
+        expected.add("|   |-- main");
+        expected.add("|   |   |-- java");
+        expected.add("|   |   |   `-- com");
+        expected.add("|   |   |       |-- foo");
+        expected.add("|   |   |       |   |-- Bap.java");
+        expected.add("|   |   |       |   `-- Bapa.java");
+        expected.add("|   |   |       `-- mc");
+        expected.add("|   |   |           `-- App.java");
+        expected.add("|   |   `-- resources");
+        expected.add("|   |       `-- app.properties");
+        expected.add("|   `-- test");
+        expected.add("|       `-- java");
+        expected.add("|           `-- com");
+        expected.add("|               `-- mc");
+        expected.add("|                   `-- AppTest.java");
+        expected.add("`-- target");
+        expected.add("    `-- classes");
         expected.add("</pre>");
 
         FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
         List<String> actual = fileTreeBuilder.buildFileTree(root, TrueFileFilter.INSTANCE);
 
         assertThat(actual, is(expected));
-    }
-
-    @Test
-    @Ignore
-    public void shouldCallReadFileWithIncludeOnOneLine() {
-        List<String> given = new LinkedList<String>();
-        given.add("<include-file-tree root=\"fileRoot\"/>");
-
-        FileTreeBuilder fileTreeBuilder = mock(FileTreeBuilder.class);
-
-        File root = new File("fileRoot");
-
-        verify(fileTreeBuilder).buildFileTree(root);
     }
 }

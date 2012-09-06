@@ -72,7 +72,7 @@
 </p>
 
 <pre>
-&lt;include root="./acceptance-test"
+&lt;include-source-code root="./acceptance-test"
          file="pom.xml"/&gt;
 </pre>
 
@@ -82,6 +82,20 @@
 
 <include-source-code root="./acceptance-test"
          file="pom.xml"/>
+
+<p>
+    You can include a file tree like this:
+</p>
+
+<pre>
+&lt;include-file-tree root="./acceptance-test"/&gt;
+</pre>
+
+<p>
+    And the result is:
+</p>
+
+<include-file-tree root="./acceptance-test"/>
 
 <h2>Pre and code</h2>
 

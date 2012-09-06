@@ -1,16 +1,21 @@
 package se.somath.publisher.includer;
 
+import se.somath.publisher.builder.FileTreeBuilder;
 import se.somath.publisher.builder.SourceCodeBuilder;
+import se.somath.publisher.parser.IncludeFileTreeParser;
 
 import java.util.LinkedList;
 import java.util.List;
 
+// todo rename to Includer
 public class SourceCodeIncluder {
     private SourceCodeBuilder sourceCodeBuilder = new SourceCodeBuilder();
     private IncludeSourceCodeParser includeSourceCodeParser = new IncludeSourceCodeParser();
 
-    public List<String> addIncludes(List<String> content) {
+    private FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
+    private IncludeFileTreeParser includeFileTreeParser = new IncludeFileTreeParser();
 
+    public List<String> addIncludes(List<String> content) {
         List<String> result = new LinkedList<String>();
 
         String includeTag = "";
@@ -68,8 +73,11 @@ public class SourceCodeIncluder {
         }
 
         if (includeTag.contains("include-file-tree")) {
-            // includeSourceCodeParser.parse(includeTag);
-            // return sourceCodeBuilder.getFormattedSourceCode(result, includeSourceCodeParser);
+            includeFileTreeParser.parse(includeTag);
+            String root = includeFileTreeParser.getRoot();
+            List<String> fileTree = fileTreeBuilder.buildFileTree(root);
+            result.addAll(fileTree);
+
             return result;
         }
 
@@ -82,5 +90,13 @@ public class SourceCodeIncluder {
 
     public void setSourceCodeBuilder(SourceCodeBuilder sourceCodeBuilder) {
         this.sourceCodeBuilder = sourceCodeBuilder;
+    }
+
+    public void setFileTreeBuilder(FileTreeBuilder fileTreeBuilder) {
+        this.fileTreeBuilder = fileTreeBuilder;
+    }
+
+    public void setIncludeFileTreeParser(IncludeFileTreeParser includeFileTreeParser) {
+        this.includeFileTreeParser = includeFileTreeParser;
     }
 }
