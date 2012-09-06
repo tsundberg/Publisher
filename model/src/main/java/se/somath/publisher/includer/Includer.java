@@ -7,8 +7,7 @@ import se.somath.publisher.parser.IncludeFileTreeParser;
 import java.util.LinkedList;
 import java.util.List;
 
-// todo rename to Includer
-public class SourceCodeIncluder {
+public class Includer {
     private SourceCodeBuilder sourceCodeBuilder = new SourceCodeBuilder();
     private IncludeSourceCodeParser includeSourceCodeParser = new IncludeSourceCodeParser();
 
@@ -94,9 +93,5 @@ public class SourceCodeIncluder {
 
     public void setFileTreeBuilder(FileTreeBuilder fileTreeBuilder) {
         this.fileTreeBuilder = fileTreeBuilder;
-    }
-
-    public void setIncludeFileTreeParser(IncludeFileTreeParser includeFileTreeParser) {
-        this.includeFileTreeParser = includeFileTreeParser;
     }
 }

@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class SourceCodeIncluderTest {
+public class IncluderTest {
 
     @Test
     public void shouldCallReadFileWithIncludeOnOneLine() {
@@ -19,7 +19,7 @@ public class SourceCodeIncluderTest {
         given.add("<include-source-code root=\"fileRoot\" file=\"fileRelativeTheRoot\"/>");
 
         SourceCodeReader sourceCodeReader = mock(SourceCodeReader.class);
-        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
         includer.addIncludes(given);
 
@@ -34,7 +34,7 @@ public class SourceCodeIncluderTest {
         given.add("file=\"fileRelativeTheRoot\"/>");
 
         SourceCodeReader sourceCodeReader = mock(SourceCodeReader.class);
-        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
         includer.addIncludes(given);
 
@@ -50,7 +50,7 @@ public class SourceCodeIncluderTest {
         given.add("file=\"fileRelativeTheRoot\"/>");
 
         SourceCodeReader sourceCodeReader = mock(SourceCodeReader.class);
-        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
         includer.addIncludes(given);
 
@@ -68,7 +68,7 @@ public class SourceCodeIncluderTest {
         given.add("-->");
 
         SourceCodeReader sourceCodeReader = mock(SourceCodeReader.class);
-        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
         List<String> actual = includer.addIncludes(given);
 
@@ -89,7 +89,7 @@ public class SourceCodeIncluderTest {
         given.add("<h2>Pre and code</h2>");
 
         SourceCodeReader sourceCodeReader = new SourceCodeReader();
-        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
         List<String> actual = includer.addIncludes(given);
 
@@ -113,7 +113,7 @@ public class SourceCodeIncluderTest {
         given.add("<h2>Pre and code</h2>");
 
         SourceCodeReader sourceCodeReader = new SourceCodeReader();
-        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
         List<String> actual = includer.addIncludes(given);
 
@@ -137,7 +137,7 @@ public class SourceCodeIncluderTest {
         given.add("<h2>Pre and code</h2>");
 
         SourceCodeReader sourceCodeReader = new SourceCodeReader();
-        SourceCodeIncluder includer = getSourceCodeIncluder(sourceCodeReader);
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
         List<String> actual = includer.addIncludes(given);
 
@@ -176,8 +176,8 @@ public class SourceCodeIncluderTest {
         }
     }
 
-    private SourceCodeIncluder getSourceCodeIncluder(SourceCodeReader sourceCodeReader) {
-        SourceCodeIncluder includer = new SourceCodeIncluder();
+    private Includer getSourceCodeIncluder(SourceCodeReader sourceCodeReader) {
+        Includer includer = new Includer();
 
         SourceCodeBuilder sourceCodeBuilder = new SourceCodeBuilder();
         sourceCodeBuilder.setSourceCodeReader(sourceCodeReader);

@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import se.somath.publisher.excpetion.PublishException;
 import se.somath.publisher.formatter.HtmlFormatter;
-import se.somath.publisher.includer.SourceCodeIncluder;
+import se.somath.publisher.includer.Includer;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -47,7 +47,7 @@ public class Main {
     }
 
     private List<String> addIncludes(List<String> unIncludedContent) {
-        SourceCodeIncluder includer = new SourceCodeIncluder();
+        Includer includer = new Includer();
         return includer.addIncludes(unIncludedContent);
     }
 

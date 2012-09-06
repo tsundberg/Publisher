@@ -18,7 +18,7 @@ public class FileTreeIncluderTest {
         given.add("<include-file-tree root=\"fileRoot\"/>");
 
         FileTreeBuilder fileTreeBuilder = mock(FileTreeBuilder.class);
-        SourceCodeIncluder includer = new SourceCodeIncluder();
+        Includer includer = new Includer();
         includer.setFileTreeBuilder(fileTreeBuilder);
 
         includer.addIncludes(given);
