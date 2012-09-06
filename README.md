@@ -1,7 +1,6 @@
 # Publisher
 
-A Maven plugin that reads a html file and includes source code into it. The source code is html encoded and is possible
-to display in a html page with all characters correctly preserved. The result is
+A Maven plugin that reads an html file and format it properly for Wordpress. Source code and file trees can be included. The source code is html encoded.
 
 ## Usage
 
