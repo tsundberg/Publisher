@@ -4,7 +4,7 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
 public class FileFilter {
-    private static final String[] EXCLUDED_FILE_TYPES = {"iml", "DS_Store"};
+    private static final String[] EXCLUDED_FILE_TYPES = {"iml", "DS_Store", "releaseBackup"};
     private static final String[] EXCLUDED_DIRECTORIES = {"target", ".git", ".idea"};
 
     public static IOFileFilter createFileFilter() {
