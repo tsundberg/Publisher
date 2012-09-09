@@ -43,52 +43,90 @@
 
 <pre>
 &lt;include-source-code root="./acceptance-test"
-         file="pom.xml"/&gt;
+         file="./src/test/java/se/somath/publisher/AcceptanceTest.java"/&gt;
 </pre>
 
 <p> And the result is: </p>
 
-<p><i>pom.xml</i></p>
+<p><i>./src/test/java/se/somath/publisher/AcceptanceTest.java</i></p>
 <pre>
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;parent&gt;
-        &lt;groupId&gt;se.somath.publisher&lt;/groupId&gt;
-        &lt;artifactId&gt;parent&lt;/artifactId&gt;
-        &lt;version&gt;1.0.0&lt;/version&gt;
-    &lt;/parent&gt;
-    &lt;groupId&gt;se.somath.publisher&lt;/groupId&gt;
-    &lt;artifactId&gt;acceptance-test&lt;/artifactId&gt;
-    &lt;version&gt;1.0.0&lt;/version&gt;
-    &lt;build&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;se.somath.publisher&lt;/groupId&gt;
-                &lt;artifactId&gt;maven-plugin&lt;/artifactId&gt;
-                &lt;version&gt;1.0.0&lt;/version&gt;
-                &lt;executions&gt;
-                    &lt;execution&gt;
-                        &lt;goals&gt;
-                            &lt;goal&gt;publish&lt;/goal&gt;
-                        &lt;/goals&gt;
-                    &lt;/execution&gt;
-                &lt;/executions&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-    &lt;/build&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;commons-io&lt;/groupId&gt;
-            &lt;artifactId&gt;commons-io&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;junit&lt;/groupId&gt;
-            &lt;artifactId&gt;junit&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/project&gt;
+package se.somath.publisher;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
+import org.junit.Test;
+
+import java.io.*;
+import java.util.Collection;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+
+public class AcceptanceTest {
+    @Test
+    public void shouldVerifyThatProcessedFileIsEqualToExpected() throws IOException {
+        String targetFileName = getActualFileName();
+        String expectedFileName = getExpectedFileName();
+
+        assertFileContentLineForLine(expectedFileName, targetFileName);
+    }
+
+    private String getActualFileName() {
+        Collection&lt;File&gt; htmlFiles = getAllHtmlFiles();
+        String wantedFileName = &quot;target/index.html&quot;;
+
+        return findFile(htmlFiles, wantedFileName);
+    }
+
+    private String getExpectedFileName() {
+        Collection&lt;File&gt; htmlFiles = getAllHtmlFiles();
+        String wantedFileName = &quot;resources/expected-index.html&quot;;
+
+        return findFile(htmlFiles, wantedFileName);
+    }
+
+    private void assertFileContentLineForLine(String expectedFile, String actualFile) throws FileNotFoundException {
+        Reader actualReader = new FileReader(actualFile);
+        Reader expectedReader = new FileReader(expectedFile);
+
+        LineIterator actualIterator = new LineIterator(actualReader);
+        LineIterator expectedIterator = new LineIterator(expectedReader);
+
+        assertEachLine(actualFile, actualIterator, expectedIterator);
+        assertFalse(&quot;The actual and target files has different length&quot;, expectedIterator.hasNext());
+    }
+
+    private Collection&lt;File&gt; getAllHtmlFiles() {
+        File currentDir = new File(&quot;.&quot;);
+        String[] extensions = {&quot;html&quot;};
+        boolean recursive = true;
+
+        return FileUtils.listFiles(currentDir, extensions, recursive);
+    }
+
+    private String findFile(Collection&lt;File&gt; htmlFiles, String wantedFileName) {
+        for (File candidateFile : htmlFiles) {
+            if (candidateFile.getAbsolutePath().endsWith(wantedFileName)) {
+                return candidateFile.getAbsolutePath();
+            }
+        }
+
+        return &quot;file not found&quot;;
+    }
+
+    private void assertEachLine(String actualFile, LineIterator actualIterator, LineIterator expectedIterator) {
+        int lineNumber = 0;
+        while (actualIterator.hasNext()) {
+            lineNumber++;
+            String errorMessage = &quot;\nsource file: &quot; + actualFile + &quot; \nline number: &quot; + lineNumber;
+            String actual = actualIterator.nextLine().trim();
+            String expected = expectedIterator.nextLine().trim();
+
+            assertThat(errorMessage, actual, is(expected));
+        }
+    }
+}
 </pre>
 
 <p> You can include a file tree like this: </p>
