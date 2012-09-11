@@ -31,12 +31,9 @@ public class SourceCodeReader {
     }
 
     private File locateRootDirectory(String root) {
-        File rootDir = new File(root);
+        DirectoryLocator directoryLocator = new DirectoryLocator();
 
-        while (!rootDir.isDirectory()) {
-            rootDir = rootDir.getParentFile();
-        }
-        return rootDir;
+        return directoryLocator.locateDirectory(root);
     }
 
     File findWantedSourceCodeFile(String root, String fileName, Collection<File> files) {
@@ -75,6 +72,7 @@ public class SourceCodeReader {
         if (!root.endsWith(File.separator)) {
             root = root + File.separator;
         }
+
         return root;
     }
 

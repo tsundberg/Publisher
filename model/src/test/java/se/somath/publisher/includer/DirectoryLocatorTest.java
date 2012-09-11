@@ -38,13 +38,7 @@ public class DirectoryLocatorTest {
 
         File actual = directoryLocator.locateDirectory("./root", workingDirectory);
 
-        assertThat(actual, is(expected));
-    }
-
-    @Test(expected = DirectoryNotFoundException.class)
-    public void shouldNotLocateRootDirectoryFromDefaultDirectory() {
-        DirectoryLocator directoryLocator = new DirectoryLocator();
-        directoryLocator.locateDirectory("./root");
+        assertThat(actual.getAbsolutePath(), is(expected.getAbsolutePath()));
     }
 
     @Test(expected = DirectoryNotFoundException.class)
@@ -55,5 +49,19 @@ public class DirectoryLocatorTest {
         DirectoryLocator directoryLocator = new DirectoryLocator();
 
         directoryLocator.locateDirectory("./undefined", workingDirectory);
+    }
+
+    @Test
+    public void shouldLocateRootDirectoryFromNonExistentSubdirectory() {
+        String workingDirName = testDirectory.getPath() + File.separator + "/root/sub";
+        File expected = new File(workingDirName);
+        assertTrue(expected.mkdirs());
+
+        File workingDirectory = new File(workingDirName + "./sub");
+        DirectoryLocator directoryLocator = new DirectoryLocator();
+
+        File actual = directoryLocator.locateDirectory("./sub", workingDirectory);
+
+        assertThat(actual.getAbsolutePath(), is(expected.getAbsolutePath()));
     }
 }
