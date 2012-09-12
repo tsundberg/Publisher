@@ -1,6 +1,7 @@
 ## [Git master] (https://github.com/tsundberg/publisher/compare/v1.0.0...master)
------------------------
-Nothing yet
+-----------------------------
+* Fixed a bug when locating directories. Searching for a directory now works properly if the start
+  is in a subdirectory to the wanted directory.
 
 ## [1.0.0]
 -----------------------------
