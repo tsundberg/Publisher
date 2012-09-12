@@ -12,7 +12,7 @@ public class DirectoryLocator {
     }
 
     public File locateDirectory(String root, File initialDirectory) {
-        String cleanedRoot = removeLeadingFileSystemCharacters(root);
+        String cleanedRoot = getDirectoryName(root);
         File workingDirectory = prepareWorkingDirectory(initialDirectory);
 
         if (workingDirectory.isDirectory()) {
@@ -33,11 +33,14 @@ public class DirectoryLocator {
         return initialDirectory;
     }
 
-    private String removeLeadingFileSystemCharacters(String root) {
+    private String getDirectoryName(String root) {
         String cleanedRoot = root;
-        int firstCharacter = 1;
-        while (cleanedRoot.startsWith(".") || cleanedRoot.startsWith("/")) {
-            cleanedRoot = cleanedRoot.substring(firstCharacter);
+
+        String[] rootParts = root.split("/");
+        int length = rootParts.length;
+        if (length > 0) {
+            int lastPart = length - 1;
+            cleanedRoot = rootParts[lastPart];
         }
 
         return cleanedRoot;
@@ -69,10 +72,15 @@ public class DirectoryLocator {
 
     private String buildCandidateDirectoryName(String[] pathParts, int candidateLength) {
         StringBuilder candidatePath = new StringBuilder();
+        candidatePath.append("/");
         for (int j = 0; j < candidateLength; j++) {
-            candidatePath.append(pathParts[j]);
-            candidatePath.append("/");
+            String pathPart = pathParts[j];
+            if (pathPart.length() > 0) {
+                candidatePath.append(pathPart);
+                candidatePath.append("/");
+            }
         }
+
         return candidatePath.toString();
     }
 }

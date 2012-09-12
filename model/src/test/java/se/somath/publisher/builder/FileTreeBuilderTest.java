@@ -5,6 +5,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import se.somath.publisher.excpetion.DirectoryNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,19 +42,12 @@ public class FileTreeBuilderTest {
         FileUtils.deleteDirectory(root.getParentFile());
     }
 
-    @Test
+    @Test(expected = DirectoryNotFoundException.class)
     public void shouldBuildAFileLayoutTreeWithOutFile() {
         String givenRoot = "/undefined";
 
-        List<String> expected = new LinkedList<String>();
-        expected.add("<pre>");
-        expected.add("No files found");
-        expected.add("</pre>");
-
         FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
-        List<String> actual = fileTreeBuilder.buildFileTree(givenRoot);
-
-        assertThat(actual, is(expected));
+        fileTreeBuilder.buildFileTree(givenRoot);
     }
 
     @Test

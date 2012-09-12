@@ -2,6 +2,7 @@ package se.somath.publisher.builder;
 
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
+import se.somath.publisher.includer.DirectoryLocator;
 import se.somath.publisher.includer.FileFilter;
 
 import java.io.File;
@@ -20,7 +21,8 @@ public class FileTreeBuilder {
      * @return a list of Strings with all files properly formatted
      */
     public List<String> buildFileTree(String root) {
-        File rootDirectory = new File(root);
+        DirectoryLocator locator = new DirectoryLocator();
+        File rootDirectory = locator.locateDirectory(root);
 
         IOFileFilter fileFilter = FileFilterUtils.and(FileFilter.createFileFilter(), FileFilter.createDirectoryFilter());
         return buildFileTree(rootDirectory, fileFilter);
@@ -33,7 +35,7 @@ public class FileTreeBuilder {
      * @param fileFilter the file filter to apply
      * @return a list of Strings with all files properly formatted
      */
-    public List<String> buildFileTree(File root, IOFileFilter fileFilter) {
+    List<String> buildFileTree(File root, IOFileFilter fileFilter) {
         List<String> result = new LinkedList<String>();
 
         File[] files = getFilteredFiles(root, fileFilter);
