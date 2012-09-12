@@ -3,7 +3,7 @@
 * None at the moment
 
 
-## [v1.0.1] (https://github.com/tsundberg/publisher/compare/v1.0.1...v1.0.0)
+## [v1.0.1] (https://github.com/tsundberg/publisher/compare/v1.0.0...v1.0.1)
 -----------------------------
 * Limited the number of included files in a file tree.
 
