@@ -40,34 +40,48 @@ public class FileTreeBuilder {
      * @return a list of Strings with all files properly formatted
      */
     List<String> buildFileTree(File root, IOFileFilter fileFilter) {
-        List<String> result = new LinkedList<String>();
-
         File[] files = getFilteredFiles(root, fileFilter);
-
-        result.add("<pre>");
         if (files != null) {
-            String applicationName = root.getName();
-            result.add(applicationName);
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
-                if (file.isFile()) {
-                    String fileRow = "|-- " + file.getName();
-                    result.add(fileRow);
-                }
-                if (file.isDirectory()) {
-                    if (i == files.length - 1) {
-                        buildFileTree("", file, true, result, fileFilter);
-                    } else {
-                        buildFileTree("", file, false, result, fileFilter);
-                    }
+            return buildTree(root, fileFilter, files);
+        } else {
+            return buildEmptyResult();
+        }
+    }
+
+    private List<String> buildTree(File root, IOFileFilter fileFilter, File[] files) {
+        List<String> result = new LinkedList<String>();
+        result.add("<pre>");
+        String applicationName = root.getName();
+        result.add(applicationName);
+        for (int fileIndex = 0; fileIndex < files.length; fileIndex++) {
+            File file = files[fileIndex];
+            if (file.isFile()) {
+                String fileRow = "|-- " + file.getName();
+                result.add(fileRow);
+            }
+            if (file.isDirectory()) {
+                if (lastItem(files, fileIndex)) {
+                    buildFileTree("", file, true, result, fileFilter);
+                } else {
+                    buildFileTree("", file, false, result, fileFilter);
                 }
             }
-        } else {
-            result.add("No files found");
         }
         result.add("</pre>");
 
         return result;
+    }
+
+    private List<String> buildEmptyResult() {
+        List<String> result = new LinkedList<String>();
+        result.add("<pre>");
+        result.add("No files found");
+        result.add("</pre>");
+        return result;
+    }
+
+    private boolean lastItem(File[] files, int fileIndex) {
+        return fileIndex == files.length - 1;
     }
 
     private void buildFileTree(String prefix, File file, boolean isTail, List<String> result, IOFileFilter fileFilter) {
