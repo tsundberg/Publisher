@@ -1,6 +1,11 @@
-## [Git master] (https://github.com/tsundberg/publisher/compare/v1.0.0...master)
+## [Git master] (https://github.com/tsundberg/publisher/compare/v1.0.1...master)
 -----------------------------
-* Limited the number of included files in a file tree
+* None at the moment
+
+
+## [v1.0.1] (https://github.com/tsundberg/publisher/compare/v1.0.1...v1.0.0)
+-----------------------------
+* Limited the number of included files in a file tree.
 
 * Fixed a bug when locating directories. Searching for a directory now works properly if the start
   is in a subdirectory to the wanted directory.
