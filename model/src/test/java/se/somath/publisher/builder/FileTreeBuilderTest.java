@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import se.somath.publisher.excpetion.DirectoryNotFoundException;
+import se.somath.publisher.excpetion.TooManyFilesFoundException;
 
 import java.io.File;
 import java.io.IOException;
@@ -112,5 +113,12 @@ public class FileTreeBuilderTest {
         List<String> actual = fileTreeBuilder.buildFileTree(root, TrueFileFilter.INSTANCE);
 
         assertThat(actual, is(expected));
+    }
+
+    @Test(expected = TooManyFilesFoundException.class)
+    public void shouldNotIncludeToManyFiles() throws IOException {
+        FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
+        String userHome = FileUtils.getUserDirectoryPath();
+        fileTreeBuilder.buildFileTree(userHome);
     }
 }

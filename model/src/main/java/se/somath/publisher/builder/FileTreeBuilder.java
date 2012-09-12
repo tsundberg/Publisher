@@ -2,6 +2,7 @@ package se.somath.publisher.builder;
 
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
+import se.somath.publisher.excpetion.TooManyFilesFoundException;
 import se.somath.publisher.includer.DirectoryLocator;
 import se.somath.publisher.includer.FileFilter;
 
@@ -13,6 +14,9 @@ import java.util.List;
  * Inspired from http://mama.indstate.edu/users/ice/tree/
  */
 public class FileTreeBuilder {
+    private static final int MAX_NUMBER_OF_FILES_IN_TREE = 2048;
+    private File rootDirectory;
+    private int counter;
 
     /**
      * Build a file tree and apply the default file filter
@@ -22,7 +26,7 @@ public class FileTreeBuilder {
      */
     public List<String> buildFileTree(String root) {
         DirectoryLocator locator = new DirectoryLocator();
-        File rootDirectory = locator.locateDirectory(root);
+        rootDirectory = locator.locateDirectory(root);
 
         IOFileFilter fileFilter = FileFilterUtils.and(FileFilter.createFileFilter(), FileFilter.createDirectoryFilter());
         return buildFileTree(rootDirectory, fileFilter);
@@ -67,6 +71,11 @@ public class FileTreeBuilder {
     }
 
     private void buildFileTree(String prefix, File file, boolean isTail, List<String> result, IOFileFilter fileFilter) {
+        if (counter > MAX_NUMBER_OF_FILES_IN_TREE) {
+            throw new TooManyFilesFoundException("Too many files found in <" + rootDirectory.getAbsolutePath() + ">");
+        }
+        counter++;
+
         String line;
         if (isTail) {
             line = prefix + "`-- " + file.getName();
