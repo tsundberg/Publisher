@@ -4,11 +4,11 @@
     <parent>
         <groupId>se.somath.publisher</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
     <groupId>se.somath.publisher</groupId>
     <artifactId>model</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
