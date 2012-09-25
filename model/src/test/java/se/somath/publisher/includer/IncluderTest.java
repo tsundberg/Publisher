@@ -96,7 +96,7 @@ public class IncluderTest {
 
         assertFileName(actual, "pom.xml");
         assertPreTagStart(actual, 5);
-        assertProjectRow(actual, 7);
+        assertProjectRow(actual, 8);
         assertPreTagEnd(actual);
     }
 
@@ -120,7 +120,7 @@ public class IncluderTest {
 
         assertFileName(actual, "fileDisplayName.xml");
         assertPreTagStart(actual, 5);
-        assertProjectRow(actual, 7);
+        assertProjectRow(actual, 8);
         assertPreTagEnd(actual);
     }
 
@@ -144,7 +144,7 @@ public class IncluderTest {
 
         assertNoFileName(actual);
         assertPreTagStart(actual, 4);
-        assertProjectRow(actual, 6);
+        assertProjectRow(actual, 7);
         assertPreTagEnd(actual);
     }
 

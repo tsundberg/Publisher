@@ -22,6 +22,7 @@ public class SourceCodeBuilder {
 
     private void addStartPreTag(List<String> result) {
         result.add("<pre>");
+        result.add("<div style=\"border: 1px inset; padding: 15px;\">");
     }
 
     private void addEncodedSourceCode(List<String> result, IncludeSourceCodeParser includeSourceCodeParser) {
@@ -32,6 +33,7 @@ public class SourceCodeBuilder {
     }
 
     private void addEndPreTag(List<String> result) {
+        result.add("</div>");
         result.add("</pre>");
     }
 
