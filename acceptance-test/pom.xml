@@ -3,17 +3,17 @@
     <parent>
         <groupId>se.somath.publisher</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
     <groupId>se.somath.publisher</groupId>
     <artifactId>acceptance-test</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
                 <groupId>se.somath.publisher</groupId>
                 <artifactId>maven-plugin</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>
