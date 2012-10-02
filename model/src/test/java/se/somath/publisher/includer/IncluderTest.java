@@ -148,6 +148,31 @@ public class IncluderTest {
         assertPreTagEnd(actual);
     }
 
+    @Test
+    public void shouldIncludeMethodAndNotDisplayFileName() {
+        List<String> given = new LinkedList<String>();
+        given.add("<p>");
+        given.add("    And the result is:");
+        given.add("</p>");
+        given.add("");
+        given.add("<include-source-code root=\"./model\"");
+        given.add("         file=\"/src/test/resources/se/somath/publisher/Example.java\"");
+        given.add("         method=\"public void shouldBeIncluded()\"");
+        given.add("         displayFileName=\"false\"/>");
+        given.add("");
+        given.add("<h2>Pre and code</h2>");
+
+        SourceCodeReader sourceCodeReader = new SourceCodeReader();
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
+
+        List<String> actual = includer.addIncludes(given);
+
+        assertNoFileName(actual);
+        assertPreTagStart(actual, 4);
+        assertIncludedMethod(actual);
+        assertPreTagEnd(actual);
+    }
+
     private void assertPreTagStart(List<String> actual, int preTagStartRow) {
         String actualLine = actual.get(preTagStartRow);
         assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("<pre>"));
@@ -163,6 +188,24 @@ public class IncluderTest {
         int preTagEndRow = actual.size() - preEndTagRowOffset;
         String actualLine = actual.get(preTagEndRow);
         assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("</pre>"));
+    }
+
+    private void assertIncludedMethod(List<String> actualLines) {
+        int startingPoint = 6;
+
+        List<String> expectedLines = new LinkedList<String>();
+
+        expectedLines.add("@Test");
+        expectedLines.add("public void shouldBeIncluded() {");
+        expectedLines.add("    assertTrue(true);");
+        expectedLines.add("}");
+
+        for (int i = 0; i < expectedLines.size(); i++) {
+            String expected = expectedLines.get(i);
+            String actual = actualLines.get(i + startingPoint);
+
+            assertThat(actual, is(expected));
+        }
     }
 
     private void assertFileName(List<String> actual, String fileDisplayName) {

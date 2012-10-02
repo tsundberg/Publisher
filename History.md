@@ -2,10 +2,13 @@
 -----------------------------
 * None yet
 
+## [v1.0.3] (https://github.com/tsundberg/publisher/compare/v1.0.2...v1.0.3)
+-----------------------------
+* Added support for including a specific method
+
 ## [v1.0.2] (https://github.com/tsundberg/publisher/compare/v1.0.1...v1.0.2)
 -----------------------------
 * Added a surrounding border to included code to distinguish it from the rest of the text
-
 
 ## [v1.0.1] (https://github.com/tsundberg/publisher/compare/v1.0.0...v1.0.1)
 -----------------------------

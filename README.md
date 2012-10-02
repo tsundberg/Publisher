@@ -12,7 +12,7 @@ Add the following to your build section in your pom:
         <plugin>
             <groupId>se.somath.publisher</groupId>
             <artifactId>maven-plugin</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
             <executions>
                 <execution>
                     <goals>
@@ -46,6 +46,7 @@ Three attributes are supported:
 
 * root - the root directory that contains the files
 * file - the relative name from the root
+* method - the method signature of a specific method to include
 * fileDisplayName - an alternative file name to display
 * displayFileName - a boolean to turn off displaying the file name
 

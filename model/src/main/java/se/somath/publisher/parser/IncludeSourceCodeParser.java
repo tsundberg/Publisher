@@ -18,6 +18,7 @@ import java.io.StringReader;
 public class IncludeSourceCodeParser {
     private String root;
     private String fileName;
+    private String method;
     private String fileDisplayName;
     private boolean shouldDisplayFileName = false;
 
@@ -36,6 +37,7 @@ public class IncludeSourceCodeParser {
         NamedNodeMap attributes = findIncludeTag(document);
         root = findRootName(attributes);
         fileName = findFileName(attributes);
+        method = findMethod(attributes);
         fileDisplayName = findFileDisplayName(attributes);
         shouldDisplayFileName = findShouldDisplayFileName(attributes);
     }
@@ -46,6 +48,14 @@ public class IncludeSourceCodeParser {
 
     public String getFileName() {
         return fileName;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public boolean shouldIncludeMethod() {
+        return method.length() > 0;
     }
 
     public String getFileDisplayName() {
@@ -80,6 +90,11 @@ public class IncludeSourceCodeParser {
 
     private String findFileName(NamedNodeMap attributes) {
         String attributeName = "file";
+        return getNodeValue(attributes, attributeName);
+    }
+
+    private String findMethod(NamedNodeMap attributes) {
+        String attributeName = "method";
         return getNodeValue(attributes, attributeName);
     }
 
