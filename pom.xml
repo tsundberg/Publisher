@@ -8,7 +8,7 @@
     </parent>
     <groupId>se.somath.publisher</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>A Maven plugin that reads a html file and includes source code into it</description>
     <url>https://github.com/tsundberg/publisher.git</url>
