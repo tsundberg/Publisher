@@ -65,6 +65,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public class AcceptanceTest {
+
     @Test
     public void shouldVerifyThatProcessedFileIsEqualToExpected() throws IOException {
         String targetFileName = getActualFileName();
@@ -127,6 +128,29 @@ public class AcceptanceTest {
             assertThat(errorMessage, actual, is(expected));
         }
     }
+}
+</div>
+</pre>
+
+<p> Including a method from a file is done like this: </p>
+
+&lt;include-source-code root="./acceptance-test"
+         file="src/test/java/se/somath/publisher/AcceptanceTest.java"
+         method="public void shouldVerifyThatProcessedFileIsEqualToExpected()"
+         displayFileName="false"/&gt;
+
+
+<p> And the result is: </p>
+
+
+<pre>
+<div style="border: 1px inset; padding: 15px;">
+@Test
+public void shouldVerifyThatProcessedFileIsEqualToExpected() throws IOException {
+    String targetFileName = getActualFileName();
+    String expectedFileName = getExpectedFileName();
+
+    assertFileContentLineForLine(expectedFileName, targetFileName);
 }
 </div>
 </pre>

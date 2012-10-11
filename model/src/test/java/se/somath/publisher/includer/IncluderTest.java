@@ -162,6 +162,12 @@ public class IncluderTest {
         given.add("");
         given.add("<h2>Pre and code</h2>");
 
+        List<String> expectedLines = new LinkedList<String>();
+        expectedLines.add("@Test");
+        expectedLines.add("public void shouldBeIncluded() {");
+        expectedLines.add("    assertTrue(true);");
+        expectedLines.add("}");
+
         SourceCodeReader sourceCodeReader = new SourceCodeReader();
         Includer includer = getSourceCodeIncluder(sourceCodeReader);
 
@@ -169,7 +175,40 @@ public class IncluderTest {
 
         assertNoFileName(actual);
         assertPreTagStart(actual, 4);
-        assertIncludedMethod(actual);
+        assertIncludedMethod(actual, expectedLines);
+        assertPreTagEnd(actual);
+    }
+
+    @Test
+    public void shouldIncludeMethodWithEmptyLine() {
+        List<String> given = new LinkedList<String>();
+        given.add("<p>");
+        given.add("    And the result is:");
+        given.add("</p>");
+        given.add("");
+        given.add("<include-source-code root=\"./model\"");
+        given.add("         file=\"/src/test/resources/se/somath/publisher/Example.java\"");
+        given.add("         method=\"public void shouldAlsoBeIncluded()\"");
+        given.add("         displayFileName=\"false\"/>");
+        given.add("");
+        given.add("<h2>Pre and code</h2>");
+
+        List<String> expectedLines = new LinkedList<String>();
+        expectedLines.add("@Test");
+        expectedLines.add("public void shouldAlsoBeIncluded() {");
+        expectedLines.add("    assertTrue(true);");
+        expectedLines.add("");
+        expectedLines.add("    assertFalse(false);");
+        expectedLines.add("}");
+
+        SourceCodeReader sourceCodeReader = new SourceCodeReader();
+        Includer includer = getSourceCodeIncluder(sourceCodeReader);
+
+        List<String> actual = includer.addIncludes(given);
+
+        assertNoFileName(actual);
+        assertPreTagStart(actual, 4);
+        assertIncludedMethod(actual, expectedLines);
         assertPreTagEnd(actual);
     }
 
@@ -190,15 +229,8 @@ public class IncluderTest {
         assertTrue("Expect to find a pre tag end, but found: \n" + actualLine + "\n\n", actualLine.contains("</pre>"));
     }
 
-    private void assertIncludedMethod(List<String> actualLines) {
+    private void assertIncludedMethod(List<String> actualLines, List<String> expectedLines) {
         int startingPoint = 6;
-
-        List<String> expectedLines = new LinkedList<String>();
-
-        expectedLines.add("@Test");
-        expectedLines.add("public void shouldBeIncluded() {");
-        expectedLines.add("    assertTrue(true);");
-        expectedLines.add("}");
 
         for (int i = 0; i < expectedLines.size(); i++) {
             String expected = expectedLines.get(i);

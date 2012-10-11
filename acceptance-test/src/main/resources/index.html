@@ -81,7 +81,25 @@
 </p>
 
 <include-source-code root="./acceptance-test"
-         file="./src/test/java/se/somath/publisher/AcceptanceTest.java"/>
+                     file="./src/test/java/se/somath/publisher/AcceptanceTest.java"/>
+
+<p>
+    Including a method from a file is done like this:
+</p>
+
+&lt;include-source-code root="./acceptance-test"
+         file="src/test/java/se/somath/publisher/AcceptanceTest.java"
+         method="public void shouldVerifyThatProcessedFileIsEqualToExpected()"
+         displayFileName="false"/&gt;
+
+
+<p> And the result is: </p>
+
+
+<include-source-code root="./acceptance-test"
+                     file="src/test/java/se/somath/publisher/AcceptanceTest.java"
+                     method="public void shouldVerifyThatProcessedFileIsEqualToExpected()"
+                     displayFileName="false"/>
 
 <p>
     You can include a file tree like this:

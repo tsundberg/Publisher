@@ -12,6 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public class AcceptanceTest {
+
     @Test
     public void shouldVerifyThatProcessedFileIsEqualToExpected() throws IOException {
         String targetFileName = getActualFileName();

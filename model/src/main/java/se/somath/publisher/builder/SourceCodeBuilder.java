@@ -120,7 +120,11 @@ public class SourceCodeBuilder {
     private List<String> unIndentMethod(int indent, List<String> indentedResult) {
         List<String> result = new LinkedList<String>();
         for (String row : indentedResult) {
-            result.add(row.substring(indent));
+            if (row.length() > indent) {
+                result.add(row.substring(indent));
+            } else {
+                result.add("");
+            }
         }
 
         return result;
