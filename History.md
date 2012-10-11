@@ -1,6 +1,10 @@
-## [Git master] (https://github.com/tsundberg/publisher/compare/v1.0.2...master)
+## [Git master] (https://github.com/tsundberg/publisher/compare/v1.0.4...master)
 -----------------------------
 * None yet
+
+## [v1.0.4] (https://github.com/tsundberg/publisher/compare/v1.0.3...v1.0.4)
+-----------------------------
+* Added support for including methods with blank lines
 
 ## [v1.0.3] (https://github.com/tsundberg/publisher/compare/v1.0.2...v1.0.3)
 -----------------------------

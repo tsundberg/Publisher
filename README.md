@@ -12,7 +12,7 @@ Add the following to your build section in your pom:
         <plugin>
             <groupId>se.somath.publisher</groupId>
             <artifactId>maven-plugin</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.4</version>
             <executions>
                 <execution>
                     <goals>
