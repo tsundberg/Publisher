@@ -1,8 +1,8 @@
 ## [Git master] (https://github.com/tsundberg/publisher/compare/v1.0.5...master)
 -----------------------------
-*
 
-## [Git master] (https://github.com/tsundberg/publisher/compare/v1.0.4...v1.0.5)
+
+## [v1.0.5] (https://github.com/tsundberg/publisher/compare/v1.0.4...v1.0.5)
 -----------------------------
 * Added support for including the only directories in a file tree
 
