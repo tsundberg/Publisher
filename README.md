@@ -64,9 +64,10 @@ This would search for the file `src/main/files/RentStepdefs.java` from the relat
 
 Add the tag `<include-file-tree>` to include a file tree
 
-One attributes is supported:
+Two attributes are supported:
 
 * root - the root directory that contains the file tree
+* only-dirs - a boolean to indicate that only directories should be included
 
 An example is:
 

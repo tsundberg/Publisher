@@ -95,7 +95,8 @@ public class Includer {
         if (includeTag.contains("include-file-tree")) {
             includeFileTreeParser.parse(includeTag);
             String root = includeFileTreeParser.getRoot();
-            List<String> fileTree = fileTreeBuilder.buildFileTree(root);
+            boolean onlyDirs = includeFileTreeParser.isOnlyDirs();
+            List<String> fileTree = fileTreeBuilder.buildFileTree(root, onlyDirs);
             result.addAll(fileTree);
 
             return result;

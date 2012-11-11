@@ -46,9 +46,10 @@ public class FileTreeBuilderTest {
     @Test(expected = DirectoryNotFoundException.class)
     public void shouldBuildAFileLayoutTreeWithOutFile() {
         String givenRoot = "/undefined";
+        boolean onlyDirs = false;
 
         FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
-        fileTreeBuilder.buildFileTree(givenRoot);
+        fileTreeBuilder.buildFileTree(givenRoot, onlyDirs);
     }
 
     @Test
@@ -76,8 +77,9 @@ public class FileTreeBuilderTest {
         expected.add("                    `-- AppTest.java");
         expected.add("</pre>");
 
+        boolean onlyDirs = false;
         FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
-        List<String> actual = fileTreeBuilder.buildFileTree(rootName);
+        List<String> actual = fileTreeBuilder.buildFileTree(rootName, onlyDirs);
 
         assertThat(actual, is(expected));
     }
@@ -119,6 +121,8 @@ public class FileTreeBuilderTest {
     public void shouldNotIncludeToManyFiles() throws IOException {
         FileTreeBuilder fileTreeBuilder = new FileTreeBuilder();
         String userHome = FileUtils.getUserDirectoryPath();
-        fileTreeBuilder.buildFileTree(userHome);
+        boolean onlyDirs = false;
+
+        fileTreeBuilder.buildFileTree(userHome, onlyDirs);
     }
 }

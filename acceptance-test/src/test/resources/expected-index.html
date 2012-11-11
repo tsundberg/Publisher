@@ -180,6 +180,28 @@ acceptance-test
             `-- expected-index.html
 </pre>
 
+<p> You can include a file tree with only directories like this: </p>
+
+<pre>
+&lt;include-file-tree root="./acceptance-test"
+                      only-dirs="true"/&gt;
+</pre>
+
+<p> And the result is: </p>
+
+<pre>
+acceptance-test
+`-- src
+    |-- main
+    |   `-- resources
+    `-- test
+        |-- java
+        |   `-- se
+        |       `-- somath
+        |           `-- publisher
+        `-- resources
+</pre>
+
 <h2>Pre and code</h2>
 
 <p> Pre and code tags should not be transformed at all, they should be treated as pass through without any alterations at all. </p>

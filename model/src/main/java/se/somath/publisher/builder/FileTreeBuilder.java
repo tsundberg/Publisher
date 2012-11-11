@@ -17,17 +17,19 @@ public class FileTreeBuilder {
     private static final int MAX_NUMBER_OF_FILES_IN_TREE = 2048;
     private File rootDirectory;
     private int counter;
+    private boolean onlyDirs;
 
     /**
      * Build a file tree and apply the default file filter
      *
-     * @param root the root directory to build from
+     * @param root     the root directory to build from
+     * @param onlyDirs set to true if the file tree only should include  directories
      * @return a list of Strings with all files properly formatted
      */
-    public List<String> buildFileTree(String root) {
+    public List<String> buildFileTree(String root, boolean onlyDirs) {
         DirectoryLocator locator = new DirectoryLocator();
         rootDirectory = locator.locateDirectory(root);
-
+        this.onlyDirs = onlyDirs;
         IOFileFilter fileFilter = FileFilterUtils.and(FileFilter.createFileFilter(), FileFilter.createDirectoryFilter());
         return buildFileTree(rootDirectory, fileFilter);
     }
@@ -57,7 +59,9 @@ public class FileTreeBuilder {
             File file = files[fileIndex];
             if (file.isFile()) {
                 String fileRow = "|-- " + file.getName();
-                result.add(fileRow);
+                if (maybeAdd(file)) {
+                    result.add(fileRow);
+                }
             }
             if (file.isDirectory()) {
                 if (lastItem(files, fileIndex)) {
@@ -96,7 +100,10 @@ public class FileTreeBuilder {
         } else {
             line = prefix + "|-- " + file.getName();
         }
-        result.add(line);
+
+        if (maybeAdd(file)) {
+            result.add(line);
+        }
 
         File[] files = getFilteredFiles(file, fileFilter);
         if (files != null) {
@@ -134,5 +141,9 @@ public class FileTreeBuilder {
 
     private boolean hasChildren(File[] children) {
         return children.length >= 1;
+    }
+
+    private boolean maybeAdd(File file) {
+        return !onlyDirs || !file.isFile();
     }
 }

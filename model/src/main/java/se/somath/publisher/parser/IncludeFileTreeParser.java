@@ -16,6 +16,7 @@ import java.io.StringReader;
 
 public class IncludeFileTreeParser {
     private String root;
+    private boolean onlyDirs;
 
     public void parse(String include) {
         Document document;
@@ -31,10 +32,15 @@ public class IncludeFileTreeParser {
 
         NamedNodeMap attributes = findIncludeTag(document);
         root = findRootName(attributes);
+        onlyDirs = findDirsOnly(attributes);
     }
 
     public String getRoot() {
         return root;
+    }
+
+    public boolean isOnlyDirs() {
+        return onlyDirs;
     }
 
     private Document parseIncludeString(String include) throws ParserConfigurationException, SAXException, IOException {
@@ -59,6 +65,11 @@ public class IncludeFileTreeParser {
         return getNodeValue(attributes, attributeName);
     }
 
+    private boolean findDirsOnly(NamedNodeMap attributes) {
+        String attributeName = "only-dirs";
+        String nodeValue = getNodeValue(attributes, attributeName);
+        return nodeValue.equalsIgnoreCase("true");
+    }
 
     private String getNodeValue(NamedNodeMap attributes, String attributeName) {
         Node item = attributes.getNamedItem(attributeName);
