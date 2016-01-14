@@ -5,15 +5,13 @@
         <artifactId>parent</artifactId>
         <version>1.0.6-SNAPSHOT</version>
     </parent>
-    <groupId>se.somath.publisher</groupId>
     <artifactId>acceptance-test</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
                 <groupId>se.somath.publisher</groupId>
                 <artifactId>maven-plugin</artifactId>
-                <version>1.0.6-SNAPSHOT</version>
+                <version>${project.version}</version>
                 <executions>
                     <execution>
                         <goals>
